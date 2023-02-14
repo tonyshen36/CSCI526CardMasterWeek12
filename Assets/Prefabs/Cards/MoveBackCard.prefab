@@ -79,7 +79,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Move Right
+  m_Text: Move Left
 --- !u!1 &2567464198922249231
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,9 +92,9 @@ GameObject:
   - component: {fileID: 2567464198922250226}
   - component: {fileID: 2567464198922249229}
   - component: {fileID: 2567464198922250224}
-  - component: {fileID: 4310690189513073884}
+  - component: {fileID: 6582161134377107011}
   m_Layer: 5
-  m_Name: MoveCard
+  m_Name: MoveBackCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8679245, g: 0.74280363, b: 0.23335704, a: 1}
+  m_Color: {r: 0.2352941, g: 0.47493473, b: 0.8666667, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -176,8 +176,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4310690189513073884}
-          m_TargetAssemblyTypeName: MoveCard, Assembly-CSharp
+        - m_Target: {fileID: 6582161134377107011}
+          m_TargetAssemblyTypeName: CardMoveBack, Assembly-CSharp
           m_MethodName: EndDrag
           m_Mode: 1
           m_Arguments:
@@ -192,8 +192,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4310690189513073884}
-          m_TargetAssemblyTypeName: MoveCard, Assembly-CSharp
+        - m_Target: {fileID: 6582161134377107011}
+          m_TargetAssemblyTypeName: CardMoveBack, Assembly-CSharp
           m_MethodName: StartDrag
           m_Mode: 1
           m_Arguments:
@@ -204,7 +204,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &4310690189513073884
+--- !u!114 &6582161134377107011
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2567464198922249231}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 323de209593e3c945a788943a16261b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e927a567f42a5549a4da237bc98fb4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   acc: 0

@@ -15,24 +15,8 @@ public class CardMove : MonoBehaviour, ICard
 
     public void ActiveCard()
     {
-        StartCoroutine(Move());
+        PlayerController.instance.MoveRight();
     }
-
-    private IEnumerator Move()
-    {
-        timeLeft = waitTime;
-        while (timeLeft > 0)
-        {
-            acc = Mathf.Lerp(0, 10, (waitTime - timeLeft) / waitTime);
-            PlayerController.instance.acc = acc;
-            timeLeft -= Time.deltaTime;
-            yield return null;
-        }
-        acc = 0;
-        PlayerController.instance.acc = acc;
-        Destroy(gameObject);
-    }
-
     void Update()
     {
         if (isDragging)
@@ -45,15 +29,12 @@ public class CardMove : MonoBehaviour, ICard
     {
         startPosition = transform.position;
         isDragging = true;
-        print("startdrag");
     }
 
     public void EndDrag()
     {
         isDragging = false;
         ActiveCard();
-        print("enddrag");
-        GetComponent<Image>().enabled = false;
-        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }

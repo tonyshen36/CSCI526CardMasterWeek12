@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemJumpCard : MonoBehaviour, IItem
+public class ItemMoveBackCard : MonoBehaviour
 {
     public int numberOfCards = 1;
 
@@ -10,9 +10,9 @@ public class ItemJumpCard : MonoBehaviour, IItem
     {
         if (collision.gameObject.tag == "Player")
         {
-            for(int i = 0; i< numberOfCards; i++)
+            for (int i = 0; i < numberOfCards; i++)
             {
-                CardManager.instance.AddJump();
+                CardManager.instance.AddMoveBack();
             }
             Destroy(this.gameObject);
         }

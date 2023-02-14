@@ -5,36 +5,22 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     private Transform player;
-    private Vector3 CamaeraPos;
+    private Vector3 CameraPos;
     [SerializeField] Vector3 offset;
-    private float CamaeraSpeed = 1;
+    public float CameraSpeed = 0.01f;
 
     private void Start()
     {
         player = PlayerController.instance.transform;
-        CamaeraPos = player.position + offset;
-        this.transform.position = CamaeraPos;
+        CameraPos = player.position + offset;
+        this.transform.position = CameraPos;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W))
-        {
-            CamaeraPos.y += CamaeraSpeed / 100;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            CamaeraPos.y -= CamaeraSpeed / 100;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            CamaeraPos.x += CamaeraSpeed / 100;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            CamaeraPos.x -= CamaeraSpeed / 100;
-        }
-        this.transform.position = CamaeraPos;
+        Vector3 speed = new Vector3(CameraSpeed * Input.GetAxis("Horizontal"), CameraSpeed * Input.GetAxis("Vertical"));
+
+        this.transform.position += speed;
     }
 }

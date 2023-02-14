@@ -11,7 +11,7 @@ public class CameraSwitch : MonoBehaviour
     void Start()
     {
         cam1.SetActive(true);
-        cam2.SetActive(false);
+        cam2.SetActive(true);
     }
 
     void Update()
