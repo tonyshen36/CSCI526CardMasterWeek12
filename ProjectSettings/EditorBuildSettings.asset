@@ -9,12 +9,21 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 50c6daa51db7d405dabb1345cb5ab33f
   - enabled: 1
-    path: Assets/Scenes/Main.unity
-    guid: 5629c432b758b3049ab480d8e7b13912
+    path: Assets/Scenes/Tutorial/tutorial.unity
+    guid: 26db65111f74d472784023f2f6b4b0ee
   - enabled: 1
-    path: Assets/Scenes/LoseScreen.unity
-    guid: 6b74328955ca44c1d8ec5a2b7caf0540
+    path: Assets/Scenes/Tutorial/WinScreen 1.unity
+    guid: d311672038f5b49af99c9cb3bfa37ac2
   - enabled: 1
-    path: Assets/Scenes/WinScreen.unity
-    guid: 329456167d6b73b4888faf53c7b94000
+    path: Assets/Scenes/Tutorial/LoseScreen 1.unity
+    guid: 377b42e325e4c40aeb476783600ad61c
+  - enabled: 1
+    path: Assets/Scenes/Level 1/Main.unity
+    guid: 1682e1f6d60d86246bfc83fde95b835b
+  - enabled: 1
+    path: Assets/Scenes/Level 1/WinScreen.unity
+    guid: 9c9e3e71f594c9d4092bc2537a174fb7
+  - enabled: 1
+    path: Assets/Scenes/Level 1/LoseScreen.unity
+    guid: 4144bf0428bfe6d4eab3a78bc1d7f8f5
   m_configObjects: {}
