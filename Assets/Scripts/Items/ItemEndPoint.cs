@@ -9,7 +9,7 @@ public class ItemEndPoint : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            SceneManager.LoadScene("WinScreen");
+            SceneManager.LoadScene("WinScreen 1");
         }
     }
 }

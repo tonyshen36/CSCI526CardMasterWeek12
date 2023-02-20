@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class RetryGame : MonoBehaviour
-{
+{   
     public void RestartButton()
     {
         SceneManager.LoadScene("Main");
@@ -15,4 +15,11 @@ public class RetryGame : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
+
+    public void TutorialButton()
+    {
+        SceneManager.LoadScene("tutorial");
+    }
+
+
 }

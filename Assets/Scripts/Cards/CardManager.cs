@@ -71,33 +71,16 @@ public class CardManager : MonoBehaviour
 
     void Update()
     {
-        if (cards.childCount == 0 && cardsInDeck.Count >= 3)
+        if (cards.childCount < 5 && cardsInDeck.Count >= 1)
         {
             int cardChoice = Random.Range(0, cardsInDeck.Count);
             cardsInDeck[cardChoice].SetActive(true);
             cardsInDeck[cardChoice].transform.SetParent(transform, cards);
             cardsInDeck.RemoveAt(cardChoice);
-            cardChoice = Random.Range(0, cardsInDeck.Count);
-            cardsInDeck[cardChoice].SetActive(true);
-            cardsInDeck[cardChoice].transform.SetParent(transform, cards);
-            cardsInDeck.RemoveAt(cardChoice);
-            cardChoice = Random.Range(0, cardsInDeck.Count);
-            cardsInDeck[cardChoice].SetActive(true);
-            cardsInDeck[cardChoice].transform.SetParent(transform, cards);
-            cardsInDeck.RemoveAt(cardChoice);
-        }
-        else if(cards.childCount == 0 && cardsInDeck.Count > 0)
-        {
-            while(cardsInDeck.Count > 0)
-            {
-                cardsInDeck[0].SetActive(true);
-                cardsInDeck[0].transform.SetParent(transform, cards);
-                cardsInDeck.RemoveAt(0);
-            }
         }
         else if (cards.childCount == 0 && cardsInDeck.Count == 0)
         {
-            SceneManager.LoadScene("LoseScreen");
+            SceneManager.LoadScene("LoseScreen 1");
         }
     }
 }
