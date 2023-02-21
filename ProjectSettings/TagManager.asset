@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Floor
+  - FallDetector
+  - MonsterTurn
+  - Monster
   layers:
   - Default
   - TransparentFX

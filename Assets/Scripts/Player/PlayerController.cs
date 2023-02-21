@@ -69,6 +69,12 @@ public class PlayerController : MonoBehaviour
             transform.position = respawnPoint;
             rb.velocity = new Vector2(0, 0);
         }
+        else if (collision.tag == "Monster")
+        {
+            transform.position = respawnPoint;
+            rb.velocity = new Vector2(0, 0);
+        }
+        
     }
 
     public void Jump()
