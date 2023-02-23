@@ -5,6 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - Floor
+  - FallDetector
+  - Spike
+  - Checkpoint
+  - Switch
+  - Wall
+  - port
+  - port2
   layers:
   - Default
   - TransparentFX
