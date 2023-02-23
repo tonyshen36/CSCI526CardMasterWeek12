@@ -13,6 +13,8 @@ public class TeleportController2 : MonoBehaviour
         {
             PlayerController.instance.transform.position =
                 new Vector2(port.transform.position.x - 3.0f, port.transform.position.y);
+            
+            PlayerController.instance.moveTimeLeft = 0;
         }
     }
     

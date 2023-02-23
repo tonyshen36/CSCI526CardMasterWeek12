@@ -74,7 +74,6 @@ public class PlayerController : MonoBehaviour
             transform.position = respawnPoint;
             rb.velocity = new Vector2(0, 0);
         }
-<<<<<<< HEAD
         else if(collision.tag == "Spike")
         {
             transform.position = respawnPoint;
@@ -82,9 +81,7 @@ public class PlayerController : MonoBehaviour
             moveTimeLeft = 0;
 
         }
-=======
->>>>>>> e4b83baa4b6ce8fdd62fff593bb30234e8f10d31
-        
+
     }
 
     public void Jump()
