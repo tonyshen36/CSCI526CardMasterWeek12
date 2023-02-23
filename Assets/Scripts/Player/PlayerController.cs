@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     public float acc;
     
     //fall and restart
-    private Vector3 respawnPoint; //recall where palyer restart
+    public Vector3 respawnPoint; //recall where palyer restart
     public GameObject fallDetector; //link the script to FallDetector
 
     // Variable to record previous frame player position
@@ -64,11 +64,24 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "FallDetector")
+        if (collision.tag == "FallDetector" )
         {
             transform.position = respawnPoint;
             rb.velocity = new Vector2(0, 0);
         }
+        else if (collision.tag == "Monster")
+        {
+            transform.position = respawnPoint;
+            rb.velocity = new Vector2(0, 0);
+        }
+        else if(collision.tag == "Spike")
+        {
+            transform.position = respawnPoint;
+            rb.velocity = new Vector2(0, 0);
+            moveTimeLeft = 0;
+
+        }
+        
     }
 
     public void Jump()
