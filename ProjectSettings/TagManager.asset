@@ -6,17 +6,14 @@ TagManager:
   tags:
   - Floor
   - FallDetector
-<<<<<<< HEAD
   - Spike
   - Checkpoint
   - Switch
   - Wall
   - port
   - port2
-=======
   - MonsterTurn
   - Monster
->>>>>>> e4b83baa4b6ce8fdd62fff593bb30234e8f10d31
   layers:
   - Default
   - TransparentFX
