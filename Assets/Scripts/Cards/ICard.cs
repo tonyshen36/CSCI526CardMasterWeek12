@@ -5,4 +5,9 @@ using UnityEngine;
 public interface ICard
 {
     void ActiveCard();
+
+    public void EnableDragging();
+
+    public void DisableDragging();
+
 }
