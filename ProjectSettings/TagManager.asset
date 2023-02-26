@@ -4,19 +4,15 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Floor
   - FallDetector
-<<<<<<< HEAD
-  - Spike
-  - Checkpoint
-  - Switch
+  - port2
   - Wall
   - port
-  - port2
-=======
-  - MonsterTurn
+  - Switch
+  - Spike
   - Monster
->>>>>>> e4b83baa4b6ce8fdd62fff593bb30234e8f10d31
+  - MonsterTurn
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
@@ -24,7 +20,7 @@ TagManager:
   - 
   - Water
   - UI
-  - Floor
+  - 
   - 
   - 
   - 

@@ -52,14 +52,14 @@ public class PlayerController : MonoBehaviour
         fallDetector.transform.position = new Vector2(transform.position.x, fallDetector.transform.position.y);
 
         // If previous frame x position is the same as current x position and player is stationary, record respawn point
-        if (previousPosition.x == transform.position.x && rb.velocity == new Vector2(0, 0))
-        {
-            respawnPoint = transform.position;
-        }
-        else
-        {
-            previousPosition = transform.position;
-        }
+        // if (previousPosition.x == transform.position.x && rb.velocity == new Vector2(0, 0))
+        // {
+        //     respawnPoint = transform.position;
+        // }
+        // else
+        // {
+        //     previousPosition = transform.position;
+        // }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -69,18 +69,25 @@ public class PlayerController : MonoBehaviour
             transform.position = respawnPoint;
             rb.velocity = new Vector2(0, 0);
         }
-        else if (collision.tag == "Monster")
-        {
-            transform.position = respawnPoint;
-            rb.velocity = new Vector2(0, 0);
-        }
+        // else if (collision.tag == "Monster")
+        // {
+        //     transform.position = respawnPoint;
+        //     rb.velocity = new Vector2(0, 0);
+        // }
         else if(collision.tag == "Spike")
         {
             transform.position = respawnPoint;
             rb.velocity = new Vector2(0, 0);
             moveTimeLeft = 0;
+        }
+        else if(collision.tag == "Checkpoint")
+        {
+            respawnPoint = collision.transform.position;
+            rb.velocity = new Vector2(0, 0);
+            moveTimeLeft = 0;
 
         }
+        
 
     }
 
