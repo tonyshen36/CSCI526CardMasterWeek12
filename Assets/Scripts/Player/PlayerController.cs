@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     
     //fall and restart
     public Vector3 respawnPoint; //recall where palyer restart
+    public Vector3 checkPoint;
     public GameObject fallDetector; //link the script to FallDetector
 
     // Variable to record previous frame player position
@@ -51,15 +52,15 @@ public class PlayerController : MonoBehaviour
 
         fallDetector.transform.position = new Vector2(transform.position.x, fallDetector.transform.position.y);
 
-        // If previous frame x position is the same as current x position and player is stationary, record respawn point
-        // if (previousPosition.x == transform.position.x && rb.velocity == new Vector2(0, 0))
-        // {
-        //     respawnPoint = transform.position;
-        // }
-        // else
-        // {
-        //     previousPosition = transform.position;
-        // }
+        //If previous frame x position is the same as current x position and player is stationary, record respawn point
+        if (previousPosition.x == transform.position.x && rb.velocity == new Vector2(0, 0))
+        {
+            respawnPoint = transform.position;
+        }
+        else
+        {
+            previousPosition = transform.position;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -69,20 +70,20 @@ public class PlayerController : MonoBehaviour
             transform.position = respawnPoint;
             rb.velocity = new Vector2(0, 0);
         }
-        // else if (collision.tag == "Monster")
-        // {
-        //     transform.position = respawnPoint;
-        //     rb.velocity = new Vector2(0, 0);
-        // }
-        else if(collision.tag == "Spike")
+        else if (collision.tag == "Monster")
         {
             transform.position = respawnPoint;
+            rb.velocity = new Vector2(0, 0);
+        }
+        else if(collision.tag == "Spike")
+        {
+            transform.position = checkPoint;
             rb.velocity = new Vector2(0, 0);
             moveTimeLeft = 0;
         }
         else if(collision.tag == "Checkpoint")
         {
-            respawnPoint = collision.transform.position;
+            checkPoint = collision.transform.position;
             rb.velocity = new Vector2(0, 0);
             moveTimeLeft = 0;
 
