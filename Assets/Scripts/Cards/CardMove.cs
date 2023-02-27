@@ -15,7 +15,7 @@ public class CardMove : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExit
 
     private Vector2 startPosition;
 
-    private bool enableDragging = false;
+    private bool enableDragging = true;
 
     private Tween tween;
 

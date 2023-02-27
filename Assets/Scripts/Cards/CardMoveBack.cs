@@ -15,7 +15,7 @@ public class CardMoveBack : MonoBehaviour, ICard, IPointerEnterHandler, IPointer
 
     private Vector2 startPosition;
 
-    private bool enableDragging = false;
+    private bool enableDragging = true;
 
     private Tween tween;
 

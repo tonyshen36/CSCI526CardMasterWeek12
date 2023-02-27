@@ -128,23 +128,23 @@ public class CardManager : MonoBehaviour
             case 1:
                 handCards[0].transform.DOLocalMove(cardLocations[2].transform.localPosition, 1).OnComplete(() => handCards[0].GetComponent<ICard>().EnableDragging());
 
-                handCards[0].GetComponent<ICard>().DisableDragging();
+                //handCards[0].GetComponent<ICard>().DisableDragging();
                 break;
             case 2:
                 handCards[0].transform.DOLocalMove(cardLocations[1].transform.localPosition, 1).OnComplete(() => handCards[0].GetComponent<ICard>().EnableDragging());
                 handCards[1].transform.DOLocalMove(cardLocations[3].transform.localPosition, 1).OnComplete(() => handCards[1].GetComponent<ICard>().EnableDragging());
 
-                handCards[0].GetComponent<ICard>().DisableDragging();
-                handCards[1].GetComponent<ICard>().DisableDragging();
+                //handCards[0].GetComponent<ICard>().DisableDragging();
+                //handCards[1].GetComponent<ICard>().DisableDragging();
                 break; 
             case 3:
                 handCards[0].transform.DOLocalMove(cardLocations[1].transform.localPosition, 1).OnComplete(() => handCards[0].GetComponent<ICard>().EnableDragging());
                 handCards[1].transform.DOLocalMove(cardLocations[2].transform.localPosition, 1).OnComplete(() => handCards[1].GetComponent<ICard>().EnableDragging());
                 handCards[2].transform.DOLocalMove(cardLocations[3].transform.localPosition, 1).OnComplete(() => handCards[2].GetComponent<ICard>().EnableDragging());
 
-                handCards[0].GetComponent<ICard>().DisableDragging();
-                handCards[1].GetComponent<ICard>().DisableDragging();
-                handCards[2].GetComponent<ICard>().DisableDragging();
+                //handCards[0].GetComponent<ICard>().DisableDragging();
+                //handCards[1].GetComponent<ICard>().DisableDragging();
+                //handCards[2].GetComponent<ICard>().DisableDragging();
                 break;
             case 4:
                 handCards[0].transform.DOLocalMove(cardLocations[0].transform.localPosition, 1).OnComplete(() => handCards[0].GetComponent<ICard>().EnableDragging());
@@ -152,10 +152,10 @@ public class CardManager : MonoBehaviour
                 handCards[2].transform.DOLocalMove(cardLocations[3].transform.localPosition, 1).OnComplete(() => handCards[2].GetComponent<ICard>().EnableDragging());
                 handCards[3].transform.DOLocalMove(cardLocations[4].transform.localPosition, 1).OnComplete(() => handCards[3].GetComponent<ICard>().EnableDragging());
 
-                handCards[0].GetComponent<ICard>().DisableDragging();
-                handCards[1].GetComponent<ICard>().DisableDragging();
-                handCards[2].GetComponent<ICard>().DisableDragging();
-                handCards[3].GetComponent<ICard>().DisableDragging();
+                //handCards[0].GetComponent<ICard>().DisableDragging();
+                //handCards[1].GetComponent<ICard>().DisableDragging();
+                //handCards[2].GetComponent<ICard>().DisableDragging();
+                //handCards[3].GetComponent<ICard>().DisableDragging();
                 break;
             case 5:
                 handCards[0].transform.DOLocalMove(cardLocations[0].transform.localPosition, 1).OnComplete(() => handCards[0].GetComponent<ICard>().EnableDragging());
@@ -164,11 +164,11 @@ public class CardManager : MonoBehaviour
                 handCards[3].transform.DOLocalMove(cardLocations[3].transform.localPosition, 1).OnComplete(() => handCards[3].GetComponent<ICard>().EnableDragging());
                 handCards[4].transform.DOLocalMove(cardLocations[4].transform.localPosition, 1).OnComplete(() => handCards[4].GetComponent<ICard>().EnableDragging());
 
-                handCards[0].GetComponent<ICard>().DisableDragging();
-                handCards[1].GetComponent<ICard>().DisableDragging();
-                handCards[2].GetComponent<ICard>().DisableDragging();
-                handCards[3].GetComponent<ICard>().DisableDragging();
-                handCards[4].GetComponent<ICard>().DisableDragging();
+                //handCards[0].GetComponent<ICard>().DisableDragging();
+                //handCards[1].GetComponent<ICard>().DisableDragging();
+                //handCards[2].GetComponent<ICard>().DisableDragging();
+                //handCards[3].GetComponent<ICard>().DisableDragging();
+                //handCards[4].GetComponent<ICard>().DisableDragging();
                 break;
             default: 
                 break;
