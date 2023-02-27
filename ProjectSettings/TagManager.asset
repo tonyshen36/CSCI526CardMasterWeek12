@@ -3,27 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - FallDetector
-<<<<<<< HEAD
-  - Spike
-  - Checkpoint
-  - Switch
-  - Wall
-  - port
-  - port2
-  - MonsterTurn
-  - Monster
-=======
-  - port2
-  - Wall
-  - port
-  - Switch
-  - Spike
-  - Monster
-  - MonsterTurn
-  - Checkpoint
->>>>>>> ccc661560b4333286ae7335e3cf606d60a717625
+  tags: []
   layers:
   - Default
   - TransparentFX
