@@ -25,6 +25,8 @@ public class CardManager : MonoBehaviour
 
     public List<GameObject> cardLocations;
 
+    public int loseScreenIndex;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -114,7 +116,7 @@ public class CardManager : MonoBehaviour
             }
             yield return new WaitForSeconds(0.2f);
         }
-        SceneManager.LoadScene("LoseScreen 1");
+        SceneManager.LoadScene(loseScreenIndex);
     }
 
     void RearrangeHand()

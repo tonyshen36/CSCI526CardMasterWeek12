@@ -2174,6 +2174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fbe0b5a89ee35144af5d5af2d19ac40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneIndex: 5
 --- !u!61 &1225987154
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -28398,6 +28399,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 684271081}
     m_Modifications:
+    - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
+      propertyPath: loseScreenIndex
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5420827168725349638, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: m_Name
       value: PF-HandRegion

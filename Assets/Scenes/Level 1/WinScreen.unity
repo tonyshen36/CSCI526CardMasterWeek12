@@ -1023,7 +1023,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1127585807}
         m_TargetAssemblyTypeName: RetryGame, Assembly-CSharp
-        m_MethodName: RestartButton
+        m_MethodName: LevelTwoButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

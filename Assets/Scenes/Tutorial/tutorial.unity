@@ -1053,6 +1053,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6792460433212881545, guid: 2ca1768a17e826e4493c02f83144f7c2, type: 3}
+      propertyPath: sceneIndex
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7187153854741912277, guid: 2ca1768a17e826e4493c02f83144f7c2, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
@@ -4421,6 +4425,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 684271081}
     m_Modifications:
     - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
+      propertyPath: loseScreenIndex
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: startingMoveRightCard
       value: 20
       objectReference: {fileID: 0}
@@ -4438,7 +4446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7942463468763228789, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7942463468763228789, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: m_AnchorMax.x
