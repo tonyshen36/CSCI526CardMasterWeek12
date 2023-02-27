@@ -1397,16 +1397,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
-<<<<<<< HEAD
 --- !u!224 &563624884 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7942463468763228789, guid: 58afb289f0738e04e802a725b158d202, type: 3}
   m_PrefabInstance: {fileID: 4085340988096879762}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &588667771
-=======
---- !u!1001 &588229088
->>>>>>> ccc661560b4333286ae7335e3cf606d60a717625
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
