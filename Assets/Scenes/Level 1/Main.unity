@@ -28398,42 +28398,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 684271081}
     m_Modifications:
-    - target: {fileID: 4085340986838906253, guid: 58afb289f0738e04e802a725b158d202, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4085340987568771654, guid: 58afb289f0738e04e802a725b158d202, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -80
-      objectReference: {fileID: 0}
-    - target: {fileID: 4085340987568771654, guid: 58afb289f0738e04e802a725b158d202, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -30
-      objectReference: {fileID: 0}
-    - target: {fileID: 4085340987892369708, guid: 58afb289f0738e04e802a725b158d202, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -160
-      objectReference: {fileID: 0}
-    - target: {fileID: 4085340987892369708, guid: 58afb289f0738e04e802a725b158d202, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -50
-      objectReference: {fileID: 0}
-    - target: {fileID: 4085340987976050396, guid: 58afb289f0738e04e802a725b158d202, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 4085340987976050396, guid: 58afb289f0738e04e802a725b158d202, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -30
-      objectReference: {fileID: 0}
-    - target: {fileID: 4085340988115146609, guid: 58afb289f0738e04e802a725b158d202, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 160
-      objectReference: {fileID: 0}
-    - target: {fileID: 4085340988115146609, guid: 58afb289f0738e04e802a725b158d202, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -50
-      objectReference: {fileID: 0}
     - target: {fileID: 5420827168725349638, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: m_Name
       value: PF-HandRegion

@@ -23,7 +23,7 @@ public class CardMoveBack : MonoBehaviour, ICard, IPointerEnterHandler, IPointer
 
     public void ActiveCard()
     {
-        PlayerController.instance.MoveRight();
+        PlayerController.instance.MoveBack();
         CardManager.instance.currentCardCount--;
         CardManager.instance.handCards.Remove(this.gameObject);
     }
