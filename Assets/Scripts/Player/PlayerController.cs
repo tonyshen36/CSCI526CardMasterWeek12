@@ -85,8 +85,7 @@ public class PlayerController : MonoBehaviour
         {
             checkPoint = collision.transform.position;
             rb.velocity = new Vector2(0, 0);
-            moveTimeLeft = 0;
-
+           
         }
         
 
