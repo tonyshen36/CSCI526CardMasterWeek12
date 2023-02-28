@@ -13,13 +13,14 @@ public class SpikeMovement : MonoBehaviour
     
     // Update is called once per frame
     public Vector3 startPos;
+    public GameObject spike;
     void Start()
     {
         startPos = transform.position;
     }
     void Update()
     {
-        if((PlayerController.instance.transform.position.x - transform.position.x)>=0 && (PlayerController.instance.transform.position.x - transform.position.x) <=8 && PlayerController.instance.transform.position.y < transform.position.y)
+        if((PlayerController.instance.transform.position.x - transform.position.x)>=0 && ( PlayerController.instance.transform.position.x- transform.position.x) <=8 )
         // Move the object upward based on the move speed
             transform.Translate(Vector2.up * moveSpeed * Time.deltaTime) ;
         else
@@ -27,5 +28,5 @@ public class SpikeMovement : MonoBehaviour
             transform.position = startPos;
         }
     }
-    
+
 }
