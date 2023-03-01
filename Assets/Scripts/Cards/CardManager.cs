@@ -16,7 +16,7 @@ public class CardManager : MonoBehaviour
     public GameObject MoveCardPrefab;
     public GameObject MoveBackCardPrefab;
 
-    public int startingMoveRightCard = 10;
+    public int startingMoveRightCard = 30;
 
     public Transform cards;
     public Transform deckLocation;
