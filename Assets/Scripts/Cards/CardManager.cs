@@ -27,6 +27,14 @@ public class CardManager : MonoBehaviour
 
     public int loseScreenIndex;
 
+    public int remainingMoveCards = 0;
+    public int remainingJumpCards = 0;
+    public int remainingMoveBackCards = 0;
+
+    public int moveCardsInHand = 0;
+    public int jumpCardsInHand = 0;
+    public int moveBackCardsInHand = 0;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -48,6 +56,7 @@ public class CardManager : MonoBehaviour
         {
             GameObject newCard = Instantiate(MoveCardPrefab, deckLocation);
             deck.Add(newCard);
+            remainingMoveCards++;
             newCard.SetActive(false);
         }
         cardsInDeck = new List<GameObject>(deck);
@@ -58,6 +67,7 @@ public class CardManager : MonoBehaviour
         GameObject newCard = Instantiate(MoveCardPrefab, deckLocation);
         deck.Add(newCard);
         cardsInDeck.Add(newCard);
+        remainingMoveCards++;
         newCard.SetActive(false);
     }
 
@@ -66,6 +76,7 @@ public class CardManager : MonoBehaviour
         GameObject newCard = Instantiate(MoveBackCardPrefab, deckLocation);
         deck.Add(newCard);
         cardsInDeck.Add(newCard);
+        remainingMoveBackCards++;
         newCard.SetActive(false);
     }
 
@@ -74,6 +85,7 @@ public class CardManager : MonoBehaviour
         GameObject newCard = Instantiate(JumpCardPrefab, deckLocation);
         deck.Add(newCard);
         cardsInDeck.Add(newCard);
+        remainingJumpCards++;
         newCard.SetActive(false);
     }
 
@@ -106,9 +118,116 @@ public class CardManager : MonoBehaviour
         {
             if (currentCardCount < 5 && cardsInDeck.Count >= 1)
             {
-                int cardChoice = Random.Range(0, cardsInDeck.Count);
+                int cardChoice = -1;
+                if (moveCardsInHand == 4 && (remainingJumpCards > 0 || remainingMoveBackCards > 0))
+                {
+                    if (remainingJumpCards > 0 && remainingMoveBackCards > 0)
+                    {
+                        CardEnum targetEnum;
+                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Jump;
+                        else targetEnum = CardEnum.MoveBack;
+                        for (int i = 0; i < cardsInDeck.Count; i++)
+                        {
+                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
+                            {
+                                cardChoice = i;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < cardsInDeck.Count; i++)
+                        {
+                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() != CardEnum.Move)
+                            {
+                                cardChoice = i;
+                                break;
+                            }
+                        }
+                    }
+                    
+                }
+                else if (moveBackCardsInHand == 4 && (remainingJumpCards > 0 || remainingMoveCards > 0))
+                {
+                    if (remainingJumpCards > 0 && remainingMoveBackCards > 0)
+                    {
+                        CardEnum targetEnum;
+                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Jump;
+                        else targetEnum = CardEnum.Move;
+                        for (int i = 0; i < cardsInDeck.Count; i++)
+                        {
+                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
+                            {
+                                cardChoice = i;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < cardsInDeck.Count; i++)
+                        {
+                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() != CardEnum.MoveBack)
+                            {
+                                cardChoice = i;
+                                break;
+                            }
+                        }
+                    }           
+                }
+                else if (jumpCardsInHand == 4 && (remainingMoveBackCards > 0 || remainingMoveCards > 0))
+                {
+                    if (remainingJumpCards > 0 && remainingMoveBackCards > 0)
+                    {
+                        CardEnum targetEnum;
+                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.MoveBack;
+                        else targetEnum = CardEnum.Move;
+                        for (int i = 0; i < cardsInDeck.Count; i++)
+                        {
+                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
+                            {
+                                cardChoice = i;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < cardsInDeck.Count; i++)
+                        {
+                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() != CardEnum.Jump)
+                            {
+                                cardChoice = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    cardChoice = Random.Range(0, cardsInDeck.Count);
+                }
+                 
+                CardEnum cardType = cardsInDeck[cardChoice].GetComponent<ICard>().GetCardType();
+                switch (cardType)
+                {
+                    case CardEnum.Move:
+                        remainingMoveCards--;
+                        moveCardsInHand++;
+                        break;
+                    case CardEnum.MoveBack:
+                        remainingMoveBackCards--;
+                        moveBackCardsInHand++;
+                        break;
+                    case CardEnum.Jump:
+                        remainingJumpCards--;
+                        jumpCardsInHand++;
+                        break;
+                }
                 cardsInDeck[cardChoice].SetActive(true);
                 cardsInDeck[cardChoice].transform.SetParent(cards);
+                
                 handCards.Add(cardsInDeck[cardChoice]);
                 cardsInDeck.RemoveAt(cardChoice);
                 currentCardCount++;
@@ -173,5 +292,33 @@ public class CardManager : MonoBehaviour
             default: 
                 break;
         }
+    }
+
+    public void ShuffleCard()
+    {
+        foreach(GameObject card in handCards)
+        {
+            card.SetActive(false);
+            card.transform.SetParent(deckLocation);
+            card.transform.localPosition = new Vector3(0, 0);
+            cardsInDeck.Add(card);
+            currentCardCount--;
+            switch (card.GetComponent<ICard>().GetCardType())
+            {
+                case CardEnum.Move:
+                    remainingMoveCards++;
+                    moveCardsInHand--;
+                    break;
+                case CardEnum.MoveBack:
+                    remainingMoveBackCards++;
+                    moveBackCardsInHand--;
+                    break;
+                case CardEnum.Jump:
+                    remainingJumpCards++;
+                    jumpCardsInHand--;
+                    break;
+            }
+        }
+        handCards.Clear();
     }
 }

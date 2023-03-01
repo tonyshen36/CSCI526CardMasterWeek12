@@ -17,12 +17,14 @@ public class CardJump : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExit
     private Tween tween;
 
     private int sibilingIndex;
+    public CardEnum cardType = CardEnum.Jump;
 
     public void ActiveCard()
     {
         PlayerController.instance.Jump();
         CardManager.instance.currentCardCount--;
         CardManager.instance.handCards.Remove(this.gameObject);
+        CardManager.instance.jumpCardsInHand--;
     }
 
     // Update is called once per frame
@@ -76,5 +78,9 @@ public class CardJump : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExit
         tween.Kill();
         this.GetComponent<Outline>().DOFade(0, .01f);
         transform.SetSiblingIndex(sibilingIndex);
+    }
+    public CardEnum GetCardType()
+    {
+        return cardType;
     }
 }

@@ -20,12 +20,13 @@ public class CardMoveBack : MonoBehaviour, ICard, IPointerEnterHandler, IPointer
     private Tween tween;
 
     private int sibilingIndex;
-
+    public CardEnum cardType = CardEnum.MoveBack;
     public void ActiveCard()
     {
         PlayerController.instance.MoveBack();
         CardManager.instance.currentCardCount--;
         CardManager.instance.handCards.Remove(this.gameObject);
+        CardManager.instance.moveBackCardsInHand--;
     }
 
     void Update()
@@ -78,5 +79,10 @@ public class CardMoveBack : MonoBehaviour, ICard, IPointerEnterHandler, IPointer
         tween.Kill();
         this.GetComponent<Outline>().DOFade(0, .01f);
         transform.SetSiblingIndex(sibilingIndex);
+    }
+
+    public CardEnum GetCardType()
+    {
+        return cardType;
     }
 }

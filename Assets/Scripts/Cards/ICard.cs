@@ -10,4 +10,6 @@ public interface ICard
 
     public void DisableDragging();
 
+    public CardEnum GetCardType();
+
 }
