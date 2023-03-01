@@ -3,7 +3,18 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Spike
+  - Floor
+  - Checkpoint
+  - FallDetector
+  - Wall
+  - port2
+  - port
+  - Switch
+  - Monster
+  - MonsterTurn
+  - Underground
   layers:
   - Default
   - TransparentFX

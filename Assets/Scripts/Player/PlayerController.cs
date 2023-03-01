@@ -28,7 +28,8 @@ public class PlayerController : MonoBehaviour
 
     // Variable to record previous frame player position
     private Vector3 previousPosition;
-
+    //check if player is undeground
+    public bool isUnderground=false;
 
     private void Awake()
     {
@@ -85,12 +86,22 @@ public class PlayerController : MonoBehaviour
         {
             checkPoint = collision.transform.position;
             rb.velocity = new Vector2(0, 0);
-           
+        }
+        else if (collision.tag == "Underground")
+        {
+            isUnderground = true;
         }
         
 
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Underground")
+        {
+            isUnderground = false;
+        }
+    }
     public void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, 10 * speed);
