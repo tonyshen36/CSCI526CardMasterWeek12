@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     bool isMovingLeft = false;
 
     public float acc;
+    // Bool to reset spike in scene 2
+    public bool resetSpike = false;
     
     //fall and restart
     public Vector3 respawnPoint; //recall where palyer restart
