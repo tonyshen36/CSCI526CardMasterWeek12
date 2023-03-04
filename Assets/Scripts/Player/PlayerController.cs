@@ -20,14 +20,14 @@ public class PlayerController : MonoBehaviour
     bool isMovingLeft = false;
 
     public float acc;
+    // Bool to reset spike in scene 2
+    public bool resetSpike = false;
     
     //fall and restart
     public Vector3 respawnPoint; //recall where palyer restart
     public Vector3 checkPoint;
     public GameObject fallDetector; //link the script to FallDetector
 
-    // Variable to record previous frame player position
-    private Vector3 previousPosition;
     //check if player is undeground
     public bool isUnderground=false;
 
@@ -44,8 +44,6 @@ public class PlayerController : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         
         respawnPoint = transform.position;
-        // Initilize previousPosition to be start of player
-        previousPosition = transform.position;
     }
 
     private void Update()
@@ -53,53 +51,39 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(acc * speed, rb.velocity.y);
 
         fallDetector.transform.position = new Vector2(transform.position.x, fallDetector.transform.position.y);
-
-        //If previous frame x position is the same as current x position and player is stationary, record respawn point
-        if (previousPosition.x == transform.position.x && rb.velocity == new Vector2(0, 0))
-        {
-            respawnPoint = transform.position;
-        }
-        else
-        {
-            previousPosition = transform.position;
-        }
     }
     
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        GameObject colliObject = collision.gameObject;
-        // Check if the collision is with an object tagged as "Player"
-        if (colliObject.CompareTag("Rock"))
-        {
-            if (acc > 20)
-            {
-                colliObject.SetActive(false);
-                rockpieces.SetActive(true);
-            }
-
-            // Print a message to the console
-            Debug.Log("The player collided with this object!");
-        }
-    }
+    // private void OnCollisionEnter2D(Collision2D collision)
+    // {
+    //     GameObject colliObject = collision.gameObject;
+    //     // Check if the collision is with an object tagged as "Player"
+    //     if (colliObject.CompareTag("Rock"))
+    //     {
+    //         if (acc > 20)
+    //         {
+    //             colliObject.SetActive(false);
+    //             rockpieces.SetActive(true);
+    //         }
+    //
+    //         // Print a message to the console
+    //         Debug.Log("The player collided with this object!");
+    //     }
+    // }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "FallDetector" )
         {
-            transform.position = respawnPoint;
+            transform.position = checkPoint;
             rb.velocity = new Vector2(0, 0);
         }
-        else if (collision.tag == "Monster")
-        {
-            transform.position = respawnPoint;
-            rb.velocity = new Vector2(0, 0);
-        }
-        else if(collision.tag == "Spike")
+        else if (collision.tag == "Spike")
         {
             transform.position = checkPoint;
             rb.velocity = new Vector2(0, 0);
             moveTimeLeft = 0;
+            Debug.Log("Spike");
         }
-        else if(collision.tag == "Checkpoint")
+        else if (collision.tag == "Checkpoint")
         {
             checkPoint = collision.transform.position;
             rb.velocity = new Vector2(0, 0);
@@ -108,6 +92,7 @@ public class PlayerController : MonoBehaviour
         {
             isUnderground = true;
         }
+
         // else if (collision.tag == "Rock")
         // {
         //     GameObject colliObject = collision.gameObject;
@@ -116,6 +101,28 @@ public class PlayerController : MonoBehaviour
         //         colliObject.SetActive(false);
         //     }
         // }
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Monster")
+        {
+            transform.position = checkPoint;
+            rb.velocity = new Vector2(0, 0);
+            Debug.Log("Monster");
+        }
+
+        else if (collision.gameObject.tag == "Rock")
+        {
+            GameObject colliObject = collision.gameObject;
+            if (acc > 20)
+            {
+                colliObject.SetActive(false);
+                rockpieces.SetActive(true);
+
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
