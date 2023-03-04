@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     //check if player is undeground
     public bool isUnderground=false;
 
+    public GameObject rockpieces;
     private void Awake()
     {
         if (PlayerController.instance == null) { PlayerController.instance = this; }
@@ -63,7 +64,23 @@ public class PlayerController : MonoBehaviour
             previousPosition = transform.position;
         }
     }
+    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        GameObject colliObject = collision.gameObject;
+        // Check if the collision is with an object tagged as "Player"
+        if (colliObject.CompareTag("Rock"))
+        {
+            if (acc > 20)
+            {
+                colliObject.SetActive(false);
+                rockpieces.SetActive(true);
+            }
 
+            // Print a message to the console
+            Debug.Log("The player collided with this object!");
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "FallDetector" )
@@ -91,8 +108,14 @@ public class PlayerController : MonoBehaviour
         {
             isUnderground = true;
         }
-        
-
+        // else if (collision.tag == "Rock")
+        // {
+        //     GameObject colliObject = collision.gameObject;
+        //     if (acc > 20)
+        //     {
+        //         colliObject.SetActive(false);
+        //     }
+        // }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -120,6 +143,13 @@ public class PlayerController : MonoBehaviour
         else { StartCoroutine(Move(-15)); }
     }
 
+    public void Dash()
+    {
+        if(isMovingRight) { moveTimeLeft += moveWaitTime; }
+        else if (isMovingLeft) { moveTimeLeft = moveWaitTime; }
+        else { StartCoroutine(Move(30)); }
+    }
+    
     private IEnumerator Move(float speed)
     {
         isMovingRight = true;

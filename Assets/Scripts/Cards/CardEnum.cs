@@ -6,5 +6,6 @@ public enum CardEnum
 {
     Move,
     MoveBack,
-    Jump
+    Jump,
+    Dash
 }

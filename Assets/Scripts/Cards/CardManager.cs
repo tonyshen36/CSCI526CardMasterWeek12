@@ -15,8 +15,10 @@ public class CardManager : MonoBehaviour
     public GameObject JumpCardPrefab;
     public GameObject MoveCardPrefab;
     public GameObject MoveBackCardPrefab;
+    public GameObject DashCardPrefab;
 
-    public int startingMoveRightCard = 30;
+    public int startingMoveRightCard = 0;
+    public int startingDashCard = 10;
 
     public Transform cards;
     public Transform deckLocation;
@@ -30,11 +32,11 @@ public class CardManager : MonoBehaviour
     public int remainingMoveCards = 0;
     public int remainingJumpCards = 0;
     public int remainingMoveBackCards = 0;
-
+    public int remainingDashCards = 0;
     public int moveCardsInHand = 0;
     public int jumpCardsInHand = 0;
     public int moveBackCardsInHand = 0;
-
+    public int dashCardsInHand = 0;
     // Start is called before the first frame update
     void Awake()
     {
@@ -52,6 +54,14 @@ public class CardManager : MonoBehaviour
     void InitalizedDeck() 
     {
         deck = new List<GameObject>();
+        for(int i = 0; i < startingDashCard; i++)
+        {
+            GameObject newCard = Instantiate(DashCardPrefab, deckLocation);
+            deck.Add(newCard);
+            remainingDashCards++;
+            newCard.SetActive(false);
+        }
+        
         for(int i = 0; i < startingMoveRightCard; i++)
         {
             GameObject newCard = Instantiate(MoveCardPrefab, deckLocation);
@@ -86,6 +96,15 @@ public class CardManager : MonoBehaviour
         deck.Add(newCard);
         cardsInDeck.Add(newCard);
         remainingJumpCards++;
+        newCard.SetActive(false);
+    }
+    
+    public void AddDash()
+    {
+        GameObject newCard = Instantiate(DashCardPrefab, deckLocation);
+        deck.Add(newCard);
+        cardsInDeck.Add(newCard);
+        remainingDashCards++;
         newCard.SetActive(false);
     }
 
@@ -246,7 +265,6 @@ public class CardManager : MonoBehaviour
                 break; 
             case 1:
                 handCards[0].transform.DOLocalMove(cardLocations[2].transform.localPosition, 1).OnComplete(() => handCards[0].GetComponent<ICard>().EnableDragging());
-
                 //handCards[0].GetComponent<ICard>().DisableDragging();
                 break;
             case 2:
@@ -316,6 +334,10 @@ public class CardManager : MonoBehaviour
                 case CardEnum.Jump:
                     remainingJumpCards++;
                     jumpCardsInHand--;
+                    break;
+                case CardEnum.Dash:
+                    remainingDashCards++;
+                    dashCardsInHand--;
                     break;
             }
         }

@@ -15,6 +15,7 @@ TagManager:
   - Monster
   - MonsterTurn
   - Underground
+  - Rock
   layers:
   - Default
   - TransparentFX

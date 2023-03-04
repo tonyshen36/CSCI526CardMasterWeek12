@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class RetryGame : MonoBehaviour
 {
+    
+    //int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+    
     public void RestartButton()
     {
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene(10);
     }
 
     public void ExitButton()

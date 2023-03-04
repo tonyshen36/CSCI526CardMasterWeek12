@@ -1,13 +1,16 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardJump : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExitHandler
+public class CardDash : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExitHandler
 {
+    public float acc = 0;
+    public float waitTime = 1;
+    public float timeLeft = 0;
+
     private bool isDragging = false;
 
     private Vector2 startPosition;
@@ -17,17 +20,16 @@ public class CardJump : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExit
     private Tween tween;
 
     private int sibilingIndex;
-    public CardEnum cardType = CardEnum.Jump;
+    public CardEnum cardType = CardEnum.Dash;
 
     public void ActiveCard()
     {
-        PlayerController.instance.Jump();
+        PlayerController.instance.Dash();
         CardManager.instance.currentCardCount--;
         CardManager.instance.handCards.Remove(this.gameObject);
-        CardManager.instance.jumpCardsInHand--;
+        CardManager.instance.dashCardsInHand--;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isDragging && enableDragging)
@@ -47,8 +49,8 @@ public class CardJump : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExit
 
     public void EndDrag()
     {
-        if(enableDragging) 
-        { 
+        if (enableDragging)
+        {
             isDragging = false;
             ActiveCard();
             tween.Kill();
@@ -79,6 +81,7 @@ public class CardJump : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExit
         this.GetComponent<Outline>().DOFade(0, .01f);
         transform.SetSiblingIndex(sibilingIndex);
     }
+
     public CardEnum GetCardType()
     {
         return cardType;

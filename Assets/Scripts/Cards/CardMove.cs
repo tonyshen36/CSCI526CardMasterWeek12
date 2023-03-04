@@ -68,14 +68,14 @@ public class CardMove : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExit
         enableDragging = false;
     }
 
-    public void OnPointerEnter(PointerEventData eventData)//µ±Êó±ê½øÈëUIºóÖ´ĞĞµÄÊÂ¼şÖ´ĞĞµÄ
+    public void OnPointerEnter(PointerEventData eventData)//å½“é¼ æ ‡è¿›å…¥UIåæ‰§è¡Œçš„äº‹ä»¶æ‰§è¡Œçš„
     {
         tween = this.GetComponent<Outline>().DOFade(1, .5f).SetLoops(-1, LoopType.Yoyo);
         sibilingIndex = transform.GetSiblingIndex();
         transform.SetAsLastSibling();
     }
 
-    public void OnPointerExit(PointerEventData eventData)//µ±Êó±êÀë¿ªUIºóÖ´ĞĞµÄÊÂ¼şÖ´ĞĞµÄ
+    public void OnPointerExit(PointerEventData eventData)//å½“é¼ æ ‡ç¦»å¼€UIåæ‰§è¡Œçš„äº‹ä»¶æ‰§è¡Œçš„
     {
         tween.Kill();
         this.GetComponent<Outline>().DOFade(0, .01f);
