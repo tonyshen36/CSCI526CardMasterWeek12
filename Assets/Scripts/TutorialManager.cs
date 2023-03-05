@@ -26,26 +26,46 @@ public class TutorialManager : MonoBehaviour
         }
         if(popUpIndex == 0){
             //if(Input.GetKeyDown(KeyCode.W)||Input.GetKeyDown(KeyCode.A)||Input.GetKeyDown(KeyCode.S)||Input.GetKeyDown(KeyCode.D)){
-            if(Input.GetKeyDown(KeyCode.Space)){
+            if(Input.GetKeyDown(KeyCode.Tab)){
                 popUpIndex++;
             }
         } else if (popUpIndex == 1){
-            if(Input.GetKeyDown(KeyCode.Space)){
+            if(Input.GetKeyDown(KeyCode.Tab)){
                 popUpIndex++;
             }
         } else if (popUpIndex == 2){
-            if(Input.GetKeyDown(KeyCode.Space)){
+            if(Input.GetKeyDown(KeyCode.Tab)){
                 popUpIndex++;
             }
         } else if (popUpIndex == 3){
-            if(Input.GetKeyDown(KeyCode.Space)){
+            if(Input.GetKeyDown(KeyCode.Tab)){
                 popUpIndex++;
             }
         } else if (popUpIndex == 4){
-            if(Input.GetKeyDown(KeyCode.Space)){
+            if(Input.GetKeyDown(KeyCode.Tab)){
                 popUpIndex++;
             }
-        }
+        } else if (popUpIndex == 5){
+            if(Input.GetKeyDown(KeyCode.Tab)){
+                popUpIndex++;
+            }
+        } else if (popUpIndex == 6){
+            if(Input.GetKeyDown(KeyCode.Tab)){
+                popUpIndex++;
+            }
+        } else if (popUpIndex == 7){
+            if(Input.GetKeyDown(KeyCode.Tab)){
+                popUpIndex++;
+            }
+        } else if (popUpIndex == 8){
+            if(Input.GetKeyDown(KeyCode.Tab)){
+                popUpIndex++;
+            }
+        } else if (popUpIndex == 9){
+            if(Input.GetKeyDown(KeyCode.Tab)){
+                popUpIndex++;
+            }
+        } 
     }
 
 

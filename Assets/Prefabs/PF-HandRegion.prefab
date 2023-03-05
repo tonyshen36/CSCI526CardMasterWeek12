@@ -133,7 +133,9 @@ MonoBehaviour:
   JumpCardPrefab: {fileID: 6589893386069864914, guid: eaf20033b7d0a394a875418ba596df50, type: 3}
   MoveCardPrefab: {fileID: 2567464198922249231, guid: f4d595fdcc8e28a49b8e2f80b4d0caf5, type: 3}
   MoveBackCardPrefab: {fileID: 2567464198922249231, guid: 447ed76daf8de424d86654dd773db597, type: 3}
+  DashCardPrefab: {fileID: 2567464198922249231, guid: 02ad50893fccd684eaffa3de9e6b21d1, type: 3}
   startingMoveRightCard: 30
+  startingDashCard: 10
   cards: {fileID: 4085340986959499087}
   deckLocation: {fileID: 4085340986894769081}
   currentCardCount: 0
@@ -147,9 +149,11 @@ MonoBehaviour:
   remainingMoveCards: 0
   remainingJumpCards: 0
   remainingMoveBackCards: 0
+  remainingDashCards: 0
   moveCardsInHand: 0
   jumpCardsInHand: 0
   moveBackCardsInHand: 0
+  dashCardsInHand: 0
 --- !u!1 &4085340987568771649
 GameObject:
   m_ObjectHideFlags: 0

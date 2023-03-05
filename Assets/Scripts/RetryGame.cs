@@ -30,4 +30,8 @@ public class RetryGame : MonoBehaviour
         SceneManager.LoadScene(7);
     }
 
+    public void LoadIndex(int i)
+    {
+        SceneManager.LoadScene(i);
+    }
 }
