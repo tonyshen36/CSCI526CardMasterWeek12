@@ -21,7 +21,7 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        dis1= Vector2.Distance(PlayerController.instance.transform.position, popUps[0].transform.position);
+        dis1 = Vector2.Distance(PlayerController.instance.transform.position, popUps[0].transform.position);
         dis2 =  Vector2.Distance(PlayerController.instance.transform.position, popUps[1].transform.position); 
         if(dis1<1.5f || dis1>5f)
         { 
