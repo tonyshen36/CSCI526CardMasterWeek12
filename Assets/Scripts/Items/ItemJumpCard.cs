@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,9 @@ using UnityEngine;
 public class ItemJumpCard : MonoBehaviour, IItem
 {
     public int numberOfCards = 1;
+    public bool Collided = false;
+
+    public event Action collideEvent;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -14,7 +18,12 @@ public class ItemJumpCard : MonoBehaviour, IItem
             {
                 CardManager.instance.AddJump();
             }
+            Collided = true;
+            CardManager.instance.setJumpCounter();
+            if (collideEvent!= null) collideEvent();
             Destroy(this.gameObject);
         }
     }
+
+
 }

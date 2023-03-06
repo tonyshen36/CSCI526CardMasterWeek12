@@ -11,7 +11,7 @@ public class ZoomController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        orizoomsize = Camera.main.orthographicSize;
     }
 
     // Update is called once per frame
@@ -20,17 +20,15 @@ public class ZoomController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M))
         {
             Debug.Log("M");
-            var camera = Camera.main;
-            var brain = (camera == null) ? null : camera.GetComponent<CinemachineBrain>();
-            var vcam = (brain == null) ? null : brain.ActiveVirtualCamera as CinemachineVirtualCamera;
-            if (vcam.m_Lens.OrthographicSize == orizoomsize)
+            if (Camera.main.orthographicSize == orizoomsize)
             {
-                vcam.m_Lens.OrthographicSize = zoomsize;
-            } else
-            {
-                vcam.m_Lens.OrthographicSize = orizoomsize;
+                Camera.main.orthographicSize = zoomsize;
             }
-            
+            else
+            {
+                Camera.main.orthographicSize = orizoomsize;
+            }
+
         }
     }
 }

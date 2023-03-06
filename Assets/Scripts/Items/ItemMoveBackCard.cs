@@ -14,6 +14,7 @@ public class ItemMoveBackCard : MonoBehaviour
             {
                 CardManager.instance.AddMoveBack();
             }
+            CardManager.instance.setBackCounter();
             Destroy(this.gameObject);
         }
     }

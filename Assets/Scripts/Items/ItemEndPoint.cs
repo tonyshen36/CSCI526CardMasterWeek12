@@ -10,6 +10,8 @@ public class ItemEndPoint : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            Analyzer.instance.reach_end_point(true);
+            PlayerController.instance.sendCardStatToAnalyzer(true);
             SceneManager.LoadScene(sceneIndex);
         }
     }

@@ -15,6 +15,7 @@ public class ItemMoveCard : MonoBehaviour
             {
                 CardManager.instance.AddMove();
             }
+            CardManager.instance.setMoveCounter();
             Destroy(this.gameObject);
         }
     }

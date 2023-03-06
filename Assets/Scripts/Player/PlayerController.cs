@@ -16,10 +16,15 @@ public class PlayerController : MonoBehaviour
 
     public float moveWaitTime = 0.2f;
     public float moveTimeLeft = 0;
-    bool isMovingRight = false;
-    bool isMovingLeft = false;
+    public bool isMovingRight = false;
+    public bool isMovingLeft = false;
 
     public float acc;
+
+    private int move_counter;
+    private int back_counter;
+    private int jump_counter;
+    private int dash_counter;
     // Bool to reset spike in scene 2
     public bool resetSpike = false;
     
@@ -44,6 +49,10 @@ public class PlayerController : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         
         respawnPoint = transform.position;
+        move_counter = 0;
+        jump_counter = 0;
+        back_counter = 0;
+        dash_counter = 0;
     }
 
     private void Update()
@@ -73,11 +82,17 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.tag == "FallDetector" )
         {
+            float current_x = transform.position.x;
+            float current_y = transform.position.y;
             transform.position = checkPoint;
             rb.velocity = new Vector2(0, 0);
+            Analyzer.instance.sendDeathData(current_x, current_y, "FallDetector");
         }
         else if (collision.tag == "Spike")
         {
+            float spike_current_x = transform.position.x;
+            float spike_current_y = transform.position.y;
+            Analyzer.instance.sendDeathData(spike_current_x, spike_current_y, "Spike");
             transform.position = checkPoint;
             rb.velocity = new Vector2(0, 0);
             moveTimeLeft = 0;
@@ -108,6 +123,9 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Monster")
         {
+            float spike_current_x = transform.position.x;
+            float spike_current_y = transform.position.y;
+            Analyzer.instance.sendDeathData(spike_current_x, spike_current_y, "Monster");
             transform.position = checkPoint;
             rb.velocity = new Vector2(0, 0);
             Debug.Log("Monster");
@@ -156,7 +174,11 @@ public class PlayerController : MonoBehaviour
         else if (isMovingLeft) { moveTimeLeft = moveWaitTime; }
         else { StartCoroutine(Move(30)); }
     }
-    
+    public void sendCardStatToAnalyzer(bool result)
+    {
+        Analyzer.instance.sendCardData(result, move_counter, back_counter, jump_counter, dash_counter);
+    }
+
     private IEnumerator Move(float speed)
     {
         isMovingRight = true;
