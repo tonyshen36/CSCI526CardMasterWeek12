@@ -174,6 +174,14 @@ public class PlayerController : MonoBehaviour
         else if (isMovingLeft) { moveTimeLeft = moveWaitTime; }
         else { StartCoroutine(Move(30)); }
     }
+
+    public void DashBack()
+    {
+        if (isMovingLeft) { moveTimeLeft += moveWaitTime; }
+        else if (isMovingRight) { moveTimeLeft = moveWaitTime; }
+        else { StartCoroutine(Move(-30)); }
+    }
+
     public void sendCardStatToAnalyzer(bool result)
     {
         Analyzer.instance.sendCardData(result, move_counter, back_counter, jump_counter, dash_counter);
