@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardMoveBack : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExitHandler
+public class CardMoveBack : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     public float acc = 0;
     public float waitTime = 1;
@@ -67,6 +67,12 @@ public class CardMoveBack : MonoBehaviour, ICard, IPointerEnterHandler, IPointer
         enableDragging = false;
     }
 
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        ActiveCard();
+        tween.Kill();
+        Destroy(gameObject);
+    }
     public void OnPointerEnter(PointerEventData eventData)//当鼠标进入UI后执行的事件执行的
     {
         tween = this.GetComponent<Outline>().DOFade(1, .5f).SetLoops(-1, LoopType.Yoyo);

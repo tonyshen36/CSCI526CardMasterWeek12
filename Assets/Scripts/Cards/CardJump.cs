@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardJump : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExitHandler
+public class CardJump : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     private bool isDragging = false;
 
@@ -64,6 +64,13 @@ public class CardJump : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExit
     public void DisableDragging()
     {
         enableDragging = false;
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        ActiveCard();
+        tween.Kill();
+        Destroy(gameObject);
     }
 
     public void OnPointerEnter(PointerEventData eventData)//当鼠标进入UI后执行的事件执行的
