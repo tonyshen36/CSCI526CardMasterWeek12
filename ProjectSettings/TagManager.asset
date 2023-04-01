@@ -16,6 +16,8 @@ TagManager:
   - MonsterTurn
   - Underground
   - Rock
+  - key
+  - door
   layers:
   - Default
   - TransparentFX

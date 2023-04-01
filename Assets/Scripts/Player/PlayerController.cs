@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 respawnPoint; //recall where palyer restart
     public Vector3 checkPoint;
     public GameObject fallDetector; //link the script to FallDetector
+    
 
     //check if player is undeground
     public bool isUnderground=false;
@@ -107,7 +108,6 @@ public class PlayerController : MonoBehaviour
         {
             isUnderground = true;
         }
-
         // else if (collision.tag == "Rock")
         // {
         //     GameObject colliObject = collision.gameObject;
@@ -140,6 +140,14 @@ public class PlayerController : MonoBehaviour
                 rockpieces.SetActive(true);
 
             }
+        }
+        else if (collision.gameObject.tag == "key")
+        {
+            GameObject doorObject = GameObject.FindWithTag("door");
+            GameObject keyObject = GameObject.FindWithTag("key");
+            Destroy(doorObject);
+            Destroy(keyObject);
+            Debug.Log("Key get");
         }
     }
 
