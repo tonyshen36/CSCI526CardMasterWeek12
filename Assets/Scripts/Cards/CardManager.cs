@@ -17,10 +17,13 @@ public class CardManager : MonoBehaviour
     public GameObject MoveBackCardPrefab;
     public GameObject DashCardPrefab;
     public GameObject DashBackCardPrefab;
+    public GameObject SlashCardPrefab;
 
     public int startingMoveRightCard = 0;
     public int startingDashCard = 10;
     public int startingDashBackCard = 10;
+
+    public int startingSlashCard = 20;
 
     public Transform cards;
     public Transform deckLocation;
@@ -36,11 +39,13 @@ public class CardManager : MonoBehaviour
     public int remainingMoveBackCards = 0;
     public int remainingDashCards = 0;
     public int remainingDashBackCards = 0;
+    public int remainingSlashCards = 0;
     public int moveCardsInHand = 0;
     public int jumpCardsInHand = 0;
     public int moveBackCardsInHand = 0;
     public int dashCardsInHand = 0;
     public int dashBackCardsInHand = 0;
+    public int SlashCardsInHand = 10;
 
     public int jumpRewardsCounter;
     public int moveRewardsCounter;
@@ -62,11 +67,11 @@ public class CardManager : MonoBehaviour
     void InitalizedDeck()
     {
         deck = new List<GameObject>();
-        for (int i = 0; i < startingDashBackCard; i++)
+        for (int i = 0; i < startingSlashCard; i++)
         {
-            GameObject newCard = Instantiate(DashBackCardPrefab, deckLocation);
+            GameObject newCard = Instantiate(SlashCardPrefab, deckLocation);
             deck.Add(newCard);
-            remainingDashBackCards++;
+            remainingSlashCards++;
             newCard.SetActive(false);
         }
         for (int i = 0; i < startingDashCard; i++)

@@ -8,5 +8,6 @@ public enum CardEnum
     MoveBack,
     Jump,
     Dash,
-    DashBack
+    DashBack,
+    Slash
 }

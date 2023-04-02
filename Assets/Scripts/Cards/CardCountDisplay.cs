@@ -9,6 +9,7 @@ public class CardCountDisplay : MonoBehaviour
     public TMP_Text jump;
     public TMP_Text dash;
     public TMP_Text moveBack;
+    public TMP_Text slash;
     // Update is called once per frame
     void Update()
     {
@@ -16,5 +17,6 @@ public class CardCountDisplay : MonoBehaviour
         jump.text = "Jump: " + CardManager.instance.remainingJumpCards;
         dash.text = "Dash: " + CardManager.instance.remainingDashCards;
         moveBack.text = "Move Back: " + CardManager.instance.remainingMoveBackCards;
+        slash.text = "Slash: " + CardManager.instance.remainingSlashCards;
     }
 }

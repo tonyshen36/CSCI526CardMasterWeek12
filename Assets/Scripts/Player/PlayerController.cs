@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float speed = 1.0f;
 
+    public int health = 1000;
     private Rigidbody2D rb;
     private float input;
     private BoxCollider2D boxCollider;
@@ -18,13 +19,15 @@ public class PlayerController : MonoBehaviour
     public float moveTimeLeft = 0;
     public bool isMovingRight = false;
     public bool isMovingLeft = false;
-
+    
     public float acc;
 
     private int move_counter;
     private int back_counter;
     private int jump_counter;
     private int dash_counter;
+    //private int slash_counter;
+    
     // Bool to reset spike in scene 2
     public bool resetSpike = false;
     
@@ -53,7 +56,8 @@ public class PlayerController : MonoBehaviour
         jump_counter = 0;
         back_counter = 0;
         dash_counter = 0;
-    }
+        //slash_counter = 0;
+        }
 
     private void Update()
     {
@@ -180,6 +184,68 @@ public class PlayerController : MonoBehaviour
         if (isMovingLeft) { moveTimeLeft += moveWaitTime; }
         else if (isMovingRight) { moveTimeLeft = moveWaitTime; }
         else { StartCoroutine(Move(-30)); }
+    }
+    
+    //Slash card operation
+    public float slashDuration = 0.5f;
+    public float slashRange = 2f;
+    public int slashDamage = 10;
+
+    private Collider2D[] hitEnemies;
+
+    public void Slash()
+    {
+        StartCoroutine(SlashCoroutine());
+    }
+
+    private IEnumerator SlashCoroutine()
+    {
+        float startTime = Time.time;
+
+        // Enable a temporary Circle Collider 2D to represent the slash range
+        CircleCollider2D slashCollider = gameObject.AddComponent<CircleCollider2D>();
+        slashCollider.isTrigger = true;
+        slashCollider.radius = slashRange;
+
+        // Keep the collider active for the duration of the slash
+        while (Time.time < startTime + slashDuration)
+        {
+            // Check for colliders in the slash range
+            hitEnemies = Physics2D.OverlapCircleAll(transform.position, slashRange);
+
+            // Deal damage to each enemy or boss in the range
+            foreach (Collider2D enemyCollider in hitEnemies)
+            {
+                // if (enemyCollider.CompareTag("Enemy"))
+                // {
+                //     Enemy enemy = enemyCollider.GetComponent<Enemy>();
+                //
+                //     if (enemy != null)
+                //     {
+                //         enemy.health -= slashDamage;
+                //         if (enemy.health <= 0)
+                //         {
+                //             // Handle enemy death
+                //         }
+                //     }
+                // }
+                if (enemyCollider.CompareTag("Boss"))
+                {
+                    BossController.instance.health -= slashDamage;
+                    if ( BossController.instance.health <= 0)
+                    {
+                        BossController.instance.boss.SetActive(false);
+                        // Handle boss death
+                    }
+                    
+                }
+            }
+
+            yield return null;
+        }
+
+        // Remove the slash collider after the slash is complete
+        Destroy(slashCollider);
     }
 
     public void sendCardStatToAnalyzer(bool result)

@@ -16,14 +16,15 @@ TagManager:
   - MonsterTurn
   - Underground
   - Rock
+  - Boss
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Boss
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 
