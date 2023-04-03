@@ -28258,6 +28258,10 @@ PrefabInstance:
       propertyPath: loseScreenIndex
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
+      propertyPath: startingSlashCard
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5420827168725349638, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: m_Name
       value: PF-HandRegion

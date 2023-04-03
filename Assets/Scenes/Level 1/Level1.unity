@@ -37235,8 +37235,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2567464198922249231, guid: 02ad50893fccd684eaffa3de9e6b21d1, type: 3}
     - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
+      propertyPath: SlashCardPrefab
+      value: 
+      objectReference: {fileID: 2567464198922249231, guid: 299e48c8c15d54548b0aadae915f03dc, type: 3}
+    - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: loseScreenIndex
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
+      propertyPath: startingSlashCard
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: DashBackCardPrefab

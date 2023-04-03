@@ -25,6 +25,7 @@ public class CardJump : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExit
         CardManager.instance.currentCardCount--;
         CardManager.instance.handCards.Remove(this.gameObject);
         CardManager.instance.jumpCardsInHand--;
+        Destroy(gameObject);
     }
 
     // Update is called once per frame
@@ -42,17 +43,29 @@ public class CardJump : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExit
         {
             startPosition = transform.position;
             isDragging = true;
+            Color temp = this.GetComponent<Outline>().effectColor;
+            this.GetComponent<Outline>().effectColor = new Color(temp.r, temp.g, temp.b, 0);
         }
     }
 
     public void EndDrag()
     {
-        if(enableDragging) 
-        { 
+        if (enableDragging)
+        {
             isDragging = false;
-            ActiveCard();
-            tween.Kill();
-            Destroy(gameObject);
+            if (CardStack.instance.cards.Contains(this))
+            {
+                CardStack.instance.cards.Remove(this);
+                tween.Kill();
+                ActiveCard();
+            }
+            else
+            {
+                CardStack.instance.cards.Add(this);
+                transform.position = startPosition;
+                Color temp = this.GetComponent<Outline>().effectColor;
+                this.GetComponent<Outline>().effectColor = new Color(temp.r, temp.g, temp.b, 1);
+            }
         }
     }
 
@@ -68,14 +81,26 @@ public class CardJump : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExit
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        ActiveCard();
-        tween.Kill();
-        Destroy(gameObject);
+        if (CardStack.instance.executing) return;
+        if (CardStack.instance.cards.Contains(this))
+        {
+            CardStack.instance.cards.Remove(this);
+            Color temp = this.GetComponent<Outline>().effectColor;
+            tween.Kill();
+            this.GetComponent<Outline>().effectColor = new Color(temp.r, temp.g, temp.b, 0);
+        }
+        else
+        {
+            CardStack.instance.cards.Add(this);
+            Color temp = this.GetComponent<Outline>().effectColor;
+            tween.Kill();
+            this.GetComponent<Outline>().effectColor = new Color(temp.r, temp.g, temp.b, 1);
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)//当鼠标进入UI后执行的事件执行的
     {
-        tween = this.GetComponent<Outline>().DOFade(1, .5f).SetLoops(-1, LoopType.Yoyo);
+        if (!CardStack.instance.cards.Contains(this)) tween = this.GetComponent<Outline>().DOFade(1, .5f).SetLoops(-1, LoopType.Yoyo);
         sibilingIndex = transform.GetSiblingIndex();
         transform.SetAsLastSibling();
     }
@@ -83,7 +108,7 @@ public class CardJump : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExit
     public void OnPointerExit(PointerEventData eventData)//当鼠标离开UI后执行的事件执行的
     {
         tween.Kill();
-        this.GetComponent<Outline>().DOFade(0, .01f);
+        if (!CardStack.instance.cards.Contains(this)) this.GetComponent<Outline>().DOFade(0, .01f);
         transform.SetSiblingIndex(sibilingIndex);
     }
     public CardEnum GetCardType()

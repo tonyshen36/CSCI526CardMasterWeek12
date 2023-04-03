@@ -177,9 +177,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: CardDash, Assembly-CSharp
-          m_MethodName: EndDrag
+        - m_Target: {fileID: -2199983891933747449}
+          m_TargetAssemblyTypeName: CardSlash, Assembly-CSharp
+          m_MethodName: DisableDragging
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -193,9 +193,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: CardDash, Assembly-CSharp
-          m_MethodName: StartDrag
+        - m_Target: {fileID: -2199983891933747449}
+          m_TargetAssemblyTypeName: CardSlash, Assembly-CSharp
+          m_MethodName: EnableDragging
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

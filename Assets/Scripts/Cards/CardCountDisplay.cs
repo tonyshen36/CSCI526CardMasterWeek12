@@ -10,6 +10,7 @@ public class CardCountDisplay : MonoBehaviour
     public TMP_Text dash;
     public TMP_Text moveBack;
     public TMP_Text slash;
+    public TMP_Text redraw;
     // Update is called once per frame
     void Update()
     {
@@ -18,5 +19,6 @@ public class CardCountDisplay : MonoBehaviour
         dash.text = "Dash: " + CardManager.instance.remainingDashCards;
         moveBack.text = "Move Back: " + CardManager.instance.remainingMoveBackCards;
         slash.text = "Slash: " + CardManager.instance.remainingSlashCards;
+        redraw.text = "Redraw: " + (CardManager.instance.RedrawLimit - CardManager.instance.RedrawTimes);
     }
 }
