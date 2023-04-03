@@ -175,10 +175,10 @@ public class BossController : MonoBehaviour
             // Ignore the collision temporarily and re-enable it after 2 seconds
             StartCoroutine(ReEnableCollision(collision.collider, GetComponent<Collider2D>(), 2f));
         }
-        else if (collision.collider.CompareTag("Ground"))
-        {
-            groundContacts++;
-        }
+        // else if (collision.collider.CompareTag("Ground"))
+        // {
+        //     groundContacts++;
+        // }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {

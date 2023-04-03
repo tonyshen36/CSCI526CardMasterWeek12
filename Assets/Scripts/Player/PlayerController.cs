@@ -224,20 +224,19 @@ public class PlayerController : MonoBehaviour
             // Deal damage to each enemy or boss in the range
             foreach (Collider2D enemyCollider in hitEnemies)
             {
-                // if (enemyCollider.CompareTag("Enemy"))
-                // {
-                //     Enemy enemy = enemyCollider.GetComponent<Enemy>();
-                //
-                //     if (enemy != null)
-                //     {
-                //         enemy.health -= slashDamage;
-                //         if (enemy.health <= 0)
-                //         {
-                //             // Handle enemy death
-                //         }
-                //     }
-                // }
-                if (enemyCollider.CompareTag("Boss"))
+                if (enemyCollider.CompareTag("Monster"))
+                {
+                    
+                    monster.instance.health -= slashDamage;
+                    if (monster.instance.health <= 0)
+                    {
+                        GameObject monsterObject = enemyCollider.gameObject;
+                        monsterObject.SetActive(false);
+                        // Handle enemy death
+                    }
+                }
+                
+                else if (enemyCollider.CompareTag("Boss"))
                 {
                     BossController.instance.health -= slashDamage;
                     if ( BossController.instance.health <= 0)

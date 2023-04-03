@@ -4,32 +4,26 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Spike
-  - Floor
-  - Checkpoint
-  - FallDetector
-  - Wall
-  - port2
-  - port
-  - Switch
-  - Monster
   - MonsterTurn
-  - Underground
-  - Rock
-<<<<<<< HEAD
-  - Boss
-=======
+  - Monster
+  - FallDetector
+  - Spike
   - key
   - door
->>>>>>> 127321f16f6cdc84d0ed32f27b5ffffda402b888
+  - Checkpoint
+  - Underground
+  - Rock
+  - Floor
+  - Boss
+  - level1-boss-door
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Boss
+  - 
   - Water
   - UI
-  - Player
+  - 
   - 
   - 
   - 

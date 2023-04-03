@@ -249,6 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1159a29a7d0984ea4a10c4284dbafe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
 --- !u!61 &82118448
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12456,13 +12457,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2567464198922249231, guid: 02ad50893fccd684eaffa3de9e6b21d1, type: 3}
     - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
+      propertyPath: SlashCardPrefab
+      value: 
+      objectReference: {fileID: 2567464198922249231, guid: 299e48c8c15d54548b0aadae915f03dc, type: 3}
+    - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: loseScreenIndex
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
+      propertyPath: startingDashCard
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
+      propertyPath: startingSlashCard
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: DashBackCardPrefab
       value: 
       objectReference: {fileID: 2567464198922249231, guid: 835d3b85b0df049788c3c6e71d26862b, type: 3}
+    - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
+      propertyPath: startingDashBackCard
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
+      propertyPath: startingMoveRightCard
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5420827168725349638, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: m_Name
       value: PF-HandRegion
@@ -13026,6 +13047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1159a29a7d0984ea4a10c4284dbafe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 50
 --- !u!61 &2090659183
 BoxCollider2D:
   m_ObjectHideFlags: 0
