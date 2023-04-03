@@ -39,24 +39,33 @@ public class CardJump : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExit
 
     public void StartDrag()
     {
-        if (enableDragging && !CardStack.instance.cards.Contains(this))
+        if (enableDragging)
         {
             startPosition = transform.position;
             isDragging = true;
+            Color temp = this.GetComponent<Outline>().effectColor;
+            this.GetComponent<Outline>().effectColor = new Color(temp.r, temp.g, temp.b, 0);
         }
     }
 
     public void EndDrag()
     {
-        if(enableDragging) 
+        if (enableDragging)
         {
             isDragging = false;
             if (CardStack.instance.cards.Contains(this))
             {
                 CardStack.instance.cards.Remove(this);
+                tween.Kill();
+                ActiveCard();
             }
-            tween.Kill();
-            ActiveCard();
+            else
+            {
+                CardStack.instance.cards.Add(this);
+                transform.position = startPosition;
+                Color temp = this.GetComponent<Outline>().effectColor;
+                this.GetComponent<Outline>().effectColor = new Color(temp.r, temp.g, temp.b, 1);
+            }
         }
     }
 
