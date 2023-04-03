@@ -15,7 +15,9 @@ public class BossController : MonoBehaviour
     private Rigidbody2D rb;
     public int health = 5000;
     private bool isAttacking;
-    
+
+    private float left = -21.35f;
+    private float right = 13.45f;
     private bool isCooldown;
     private Vector2 targetPosition;
     public int groundContacts;
@@ -88,6 +90,15 @@ public class BossController : MonoBehaviour
         while (Time.time < dashStartTime + dashDuration)
         {
             float newX = transform.position.x + direction * dashSpeed * Time.deltaTime;
+            if (newX > right)
+            {
+                newX = right;
+            }
+
+            if (newX < left)
+            {
+                newX = left;
+            }
             transform.position = new Vector2(newX, transform.position.y);
             yield return null;
         }
@@ -117,8 +128,18 @@ public class BossController : MonoBehaviour
         {
             float jumpStartTime = Time.time;
             Vector2 startPosition = transform.position;
-            Vector2 controlPoint = new Vector2(startPosition.x + horizontalDistance / 2f, startPosition.y + jumpHeight);
-            Vector2 endPosition = new Vector2(startPosition.x + horizontalDistance, startPosition.y);
+            float endX = startPosition.x + horizontalDistance;
+            if (endX > right)
+            {
+                endX = right;
+            }
+
+            if (endX < left)
+            {
+                endX = left;
+            }
+            Vector2 controlPoint = new Vector2(endX / 2f, startPosition.y + jumpHeight);
+            Vector2 endPosition = new Vector2(endX, startPosition.y);
 
             while (Time.time < jumpStartTime + jumpDuration)
             {
