@@ -22,7 +22,8 @@ public class CardManager : MonoBehaviour
     public int startingMoveRightCard = 0;
     public int startingDashCard = 10;
     public int startingDashBackCard = 10;
-
+    public int startingJumpCard = 10;
+    public int startingMoveBackCard = 10;
     public int startingSlashCard = 20;
 
     public Transform cards;
@@ -45,7 +46,7 @@ public class CardManager : MonoBehaviour
     public int moveBackCardsInHand = 0;
     public int dashCardsInHand = 0;
     public int dashBackCardsInHand = 0;
-    public int SlashCardsInHand = 10;
+    public int slashCardsInHand = 10;
 
     public int jumpRewardsCounter;
     public int moveRewardsCounter;
@@ -92,7 +93,6 @@ public class CardManager : MonoBehaviour
             remainingDashCards++;
             newCard.SetActive(false);
         }
-
         for (int i = 0; i < startingMoveRightCard; i++)
         {
             GameObject newCard = Instantiate(MoveCardPrefab, deckLocation);
@@ -100,9 +100,23 @@ public class CardManager : MonoBehaviour
             remainingMoveCards++;
             newCard.SetActive(false);
         }
+        for (int i = 0; i < startingJumpCard; i++)
+        {
+            GameObject newCard = Instantiate(JumpCardPrefab, deckLocation);
+            deck.Add(newCard);
+            remainingJumpCards++;
+            newCard.SetActive(false);
+        }
+        for (int i = 0; i < startingMoveBackCard; i++)
+        {
+            GameObject newCard = Instantiate(MoveBackCardPrefab, deckLocation);
+            deck.Add(newCard);
+            remainingMoveBackCards++;
+            newCard.SetActive(false);
+        }
         cardsInDeck = new List<GameObject>(deck);
     }
-
+        
     public void AddMove()
     {
         GameObject newCard = Instantiate(MoveCardPrefab, deckLocation);
@@ -145,6 +159,14 @@ public class CardManager : MonoBehaviour
         deck.Add(newCard);
         cardsInDeck.Add(newCard);
         remainingDashBackCards++;
+        newCard.SetActive(false);
+    }
+    public void AddSlash()
+    {
+        GameObject newCard = Instantiate(SlashCardPrefab, deckLocation);
+        deck.Add(newCard);
+        cardsInDeck.Add(newCard);
+        remainingSlashCards++;
         newCard.SetActive(false);
     }
 
@@ -1123,6 +1145,10 @@ public class CardManager : MonoBehaviour
                     case CardEnum.DashBack:
                         remainingDashBackCards--;
                         dashBackCardsInHand++;
+                        break;
+                    case CardEnum.Slash:
+                        remainingSlashCards--;
+                        slashCardsInHand++;
                         break;
                 }
                 cardsInDeck[cardChoice].SetActive(true);

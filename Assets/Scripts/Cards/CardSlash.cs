@@ -25,7 +25,7 @@ public class CardSlash : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExi
         PlayerController.instance.Slash();
         CardManager.instance.currentCardCount--;
         CardManager.instance.handCards.Remove(this.gameObject);
-        CardManager.instance.SlashCardsInHand--;
+        CardManager.instance.slashCardsInHand--;
         Destroy(gameObject);
     }
 

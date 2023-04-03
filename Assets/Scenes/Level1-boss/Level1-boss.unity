@@ -596,6 +596,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3543874113747156732, guid: 5f81b39fa16acba4a908002700e3bd80, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6628081218814131222, guid: 5f81b39fa16acba4a908002700e3bd80, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f81b39fa16acba4a908002700e3bd80, type: 3}
 --- !u!224 &26775888 stripped
@@ -7795,7 +7803,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: startingDashCard
-      value: 15
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
+      propertyPath: startingJumpCard
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: startingSlashCard
@@ -7807,11 +7819,15 @@ PrefabInstance:
       objectReference: {fileID: 2567464198922249231, guid: 835d3b85b0df049788c3c6e71d26862b, type: 3}
     - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: startingDashBackCard
-      value: 15
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
+      propertyPath: startingMoveBackCard
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: startingMoveRightCard
-      value: 15
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5420827168725349638, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: m_Name
