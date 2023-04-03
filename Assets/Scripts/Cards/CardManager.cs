@@ -50,6 +50,10 @@ public class CardManager : MonoBehaviour
     public int jumpRewardsCounter;
     public int moveRewardsCounter;
     public int backRewardsCounter;
+
+    public int RedrawTimes = 0;
+    public int RedrawLimit = 5;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -72,6 +76,13 @@ public class CardManager : MonoBehaviour
             GameObject newCard = Instantiate(SlashCardPrefab, deckLocation);
             deck.Add(newCard);
             remainingSlashCards++;
+            newCard.SetActive(false);
+        }
+        for (int i = 0; i < startingDashBackCard; i++)
+        {
+            GameObject newCard = Instantiate(DashBackCardPrefab, deckLocation);
+            deck.Add(newCard);
+            remainingDashBackCards++;
             newCard.SetActive(false);
         }
         for (int i = 0; i < startingDashCard; i++)
@@ -1186,38 +1197,42 @@ public class CardManager : MonoBehaviour
 
     public void ShuffleCard()
     {
-        foreach (GameObject card in handCards)
+        if (RedrawTimes < RedrawLimit)
         {
-            card.SetActive(false);
-            card.transform.SetParent(deckLocation);
-            card.transform.localPosition = new Vector3(0, 0);
-            cardsInDeck.Add(card);
-            currentCardCount--;
-            switch (card.GetComponent<ICard>().GetCardType())
+            foreach (GameObject card in handCards)
             {
-                case CardEnum.Move:
-                    remainingMoveCards++;
-                    moveCardsInHand--;
-                    break;
-                case CardEnum.MoveBack:
-                    remainingMoveBackCards++;
-                    moveBackCardsInHand--;
-                    break;
-                case CardEnum.Jump:
-                    remainingJumpCards++;
-                    jumpCardsInHand--;
-                    break;
-                case CardEnum.Dash:
-                    remainingDashCards++;
-                    dashCardsInHand--;
-                    break;
-                case CardEnum.DashBack:
-                    remainingDashBackCards++;
-                    dashBackCardsInHand--;
-                    break;
+                card.SetActive(false);
+                card.transform.SetParent(deckLocation);
+                card.transform.localPosition = new Vector3(0, 0);
+                cardsInDeck.Add(card);
+                currentCardCount--;
+                switch (card.GetComponent<ICard>().GetCardType())
+                {
+                    case CardEnum.Move:
+                        remainingMoveCards++;
+                        moveCardsInHand--;
+                        break;
+                    case CardEnum.MoveBack:
+                        remainingMoveBackCards++;
+                        moveBackCardsInHand--;
+                        break;
+                    case CardEnum.Jump:
+                        remainingJumpCards++;
+                        jumpCardsInHand--;
+                        break;
+                    case CardEnum.Dash:
+                        remainingDashCards++;
+                        dashCardsInHand--;
+                        break;
+                    case CardEnum.DashBack:
+                        remainingDashBackCards++;
+                        dashBackCardsInHand--;
+                        break;
+                }
             }
+            handCards.Clear();
+            RedrawTimes += 1;
         }
-        handCards.Clear();
     }
 
     public int getJumpRewardsCounter()
