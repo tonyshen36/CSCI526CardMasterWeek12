@@ -16,6 +16,7 @@ TagManager:
   - Floor
   - Boss
   - level1-boss-door
+  - HealthBar
   layers:
   - Default
   - TransparentFX

@@ -6,6 +6,7 @@ public class PlayerDoorController : MonoBehaviour
 {
     public GameObject door;
 
+    public GameObject healthBar;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +24,7 @@ public class PlayerDoorController : MonoBehaviour
         if (collision.tag == "level1-boss-door")
         {
             door.SetActive(true);
+            healthBar.SetActive(true);
         }
     }
 }
