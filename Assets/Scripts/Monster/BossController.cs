@@ -205,12 +205,12 @@ public class BossController : MonoBehaviour
         //     groundContacts++;
         // }
     }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Ground"))
-        {
-            groundContacts--;
-        }
-    }
+    // private void OnCollisionExit2D(Collision2D collision)
+    // {
+    //     if (collision.collider.CompareTag("Ground"))
+    //     {
+    //         groundContacts--;
+    //     }
+    // }
 }
 
