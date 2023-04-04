@@ -75,11 +75,21 @@ public class BossController : MonoBehaviour
     {
         isAttacking = true;
 
-        float targetX = player.transform.position.x;
+        float targetX;
+        if (transform.position.x < left + (right - left) / 2)
+        {
+            targetX = right;
+        }
+        else
+        {
+            targetX = left;
+        }
         float startPositionX = transform.position.x;
         float direction = Mathf.Sign(targetX - startPositionX);
         float dashStartTime = Time.time;
-
+   
+        
+        
         while (Time.time < dashStartTime + dashDuration)
         {
             float newX = transform.position.x + direction * dashSpeed * Time.deltaTime;
@@ -109,9 +119,18 @@ public class BossController : MonoBehaviour
         float jumpDuration = 1.5f;
         float delayBetweenJumps = 0.15f;
 
-        // Calculate the horizontal distance and speed
-        float horizontalDistance = player.transform.position.x - transform.position.x;
-        float horizontalSpeed = horizontalDistance / (2f * jumpDuration);
+        // Determine the target position
+        float targetX;
+        if (transform.position.x < left + (right - left) / 2)
+        {
+            targetX = right;
+        }
+        else
+        {
+            targetX = left;
+        }
+
+        float horizontalDistance = (targetX - transform.position.x) / 2f; // Divide the distance by 2 for the double jump
 
         // Save the initial height
         float initialHeight = transform.position.y;
@@ -122,16 +141,8 @@ public class BossController : MonoBehaviour
             float jumpStartTime = Time.time;
             Vector2 startPosition = transform.position;
             float endX = startPosition.x + horizontalDistance;
-            if (endX > right)
-            {
-                endX = right;
-            }
 
-            if (endX < left)
-            {
-                endX = left;
-            }
-            Vector2 controlPoint = new Vector2(endX / 2f, startPosition.y + jumpHeight);
+            Vector2 controlPoint = new Vector2((startPosition.x + endX) / 2f, startPosition.y + jumpHeight);
             Vector2 endPosition = new Vector2(endX, startPosition.y);
 
             while (Time.time < jumpStartTime + jumpDuration)

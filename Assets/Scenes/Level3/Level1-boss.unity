@@ -558,7 +558,7 @@ TilemapCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -53677,11 +53677,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: startingDashCard
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: startingJumpCard
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: startingSlashCard
@@ -53701,7 +53701,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: startingMoveRightCard
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5420827168725349638, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: m_Name
