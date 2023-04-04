@@ -216,15 +216,16 @@ public class CardManager : MonoBehaviour
             if (currentCardCount < 5 && cardsInDeck.Count >= 1)
             {
                 int cardChoice = -1;
-                if (moveCardsInHand == 4 && (remainingJumpCards > 0 || remainingMoveBackCards > 0 || remainingDashCards > 0 || remainingDashBackCards > 0))
+                if (moveCardsInHand == 4 && (remainingJumpCards > 0 || remainingMoveBackCards > 0 || remainingDashCards > 0 || remainingDashBackCards > 0 || remainingSlashCards > 0))
                 {
-                    if (remainingJumpCards > 0 && remainingDashBackCards > 0 && remainingDashCards > 0 && remainingMoveBackCards > 0)
+                    if (remainingJumpCards > 0 && remainingDashBackCards > 0 && remainingDashCards > 0 && remainingMoveBackCards > 0 && remainingSlashCards > 0)
                     {
                         CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 4);
+                        int randomTarget = Random.Range(0, 5);
                         if (randomTarget == 0) targetEnum = CardEnum.Jump;
                         else if (randomTarget == 1) targetEnum = CardEnum.Dash;
                         else if (randomTarget == 2) targetEnum = CardEnum.MoveBack;
+                        else if (randomTarget == 3) targetEnum = CardEnum.Slash;
                         else targetEnum = CardEnum.DashBack;
                         for (int i = 0; i < cardsInDeck.Count; i++)
                         {
@@ -235,12 +236,13 @@ public class CardManager : MonoBehaviour
                             }
                         }
                     }
-                    else if (remainingJumpCards > 0 && remainingDashBackCards > 0 && remainingMoveBackCards > 0)
+                    else if (remainingJumpCards > 0 && remainingDashBackCards > 0 && remainingMoveBackCards > 0 && remainingSlashCards > 0)
                     {
                         CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
+                        int randomTarget = Random.Range(0, 4);
                         if (randomTarget == 0) targetEnum = CardEnum.Jump;
                         else if (randomTarget == 1) targetEnum = CardEnum.MoveBack;
+                        else if (randomTarget == 2) targetEnum = CardEnum.Slash;
                         else targetEnum = CardEnum.DashBack;
                         for (int i = 0; i < cardsInDeck.Count; i++)
                         {

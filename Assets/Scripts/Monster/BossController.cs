@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class BossController : MonoBehaviour
 {
-    public static BossController instance;
     public GameObject boss;
     public float dashSpeed;
     public float dashDuration;
@@ -16,18 +15,12 @@ public class BossController : MonoBehaviour
     public int health = 5000;
     private bool isAttacking;
 
-    private float left = -21.35f;
-    private float right = 13.45f;
+    public float left = -21.35f;
+    public float right = 13.45f;
     private bool isCooldown;
     private Vector2 targetPosition;
     public int groundContacts;
     
-    private void Awake()
-    {
-        if (BossController.instance == null) { BossController.instance = this; }
-        else { Destroy(this); }
-    }
-
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -180,12 +173,12 @@ public class BossController : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerController.instance.health -= 10;
-            if (PlayerController.instance.health <= 0)
-            {   
-                // Load scene with build index 0 (assuming Scene 1 has build index 0)
-                SceneManager.LoadScene(5);
-                
-            }
+            // if (PlayerController.instance.health <= 0)
+            // {   
+            //     // Load scene with build index 0 (assuming Scene 1 has build index 0)
+            //     SceneManager.LoadScene(5);
+            //     
+            // }
             // Reduce the player's health here
             // PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
             // if (playerHealth != null)

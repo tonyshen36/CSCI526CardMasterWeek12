@@ -4,18 +4,11 @@ using UnityEngine;
 
 public class monster : MonoBehaviour
 {
-    public static monster instance;
     private float speed = 1.0f;
     private bool moveRight = true;
 
     public int health = 50;
-    
-    private void Awake()
-    {
-        if (monster.instance == null) { monster.instance = this; }
-        else { Destroy(this); }
-    }
-    
+
     // Start is called before the first frame update
     void Start()
     {

@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private float speed = 1.0f;
 
     public int health = 1000;
+    public int boss_index;
     private Rigidbody2D rb;
     private float input;
     private BoxCollider2D boxCollider;
@@ -40,7 +41,7 @@ public class PlayerController : MonoBehaviour
     //check if player is undeground
     public bool isUnderground=false;
 
-    public GameObject rockpieces;
+    //public GameObject rockpieces;
     private void Awake()
     {
         if (PlayerController.instance == null) { PlayerController.instance = this; }
@@ -65,6 +66,13 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(acc * speed, rb.velocity.y);
 
         fallDetector.transform.position = new Vector2(transform.position.x, fallDetector.transform.position.y);
+
+        if (health <= 0)
+        {
+            transform.position = checkPoint;
+            rb.velocity = new Vector2(0, 0);
+            moveTimeLeft = 0;
+        }
     }
     
     // private void OnCollisionEnter2D(Collision2D collision)
@@ -141,8 +149,6 @@ public class PlayerController : MonoBehaviour
             if (acc > 20)
             {
                 colliObject.SetActive(false);
-                rockpieces.SetActive(true);
-
             }
         }
         else if (collision.gameObject.tag == "key")
@@ -224,26 +230,42 @@ public class PlayerController : MonoBehaviour
             // Deal damage to each enemy or boss in the range
             foreach (Collider2D enemyCollider in hitEnemies)
             {
-                if (enemyCollider.CompareTag("Monster"))
-                {
-                    
-                    monster.instance.health -= slashDamage;
-                    if (monster.instance.health <= 0)
-                    {
-                        GameObject monsterObject = enemyCollider.gameObject;
-                        monsterObject.SetActive(false);
-                        // Handle enemy death
-                    }
-                }
+                // if (enemyCollider.CompareTag("Monster"))
+                // {
+                //     
+                //     monster.instance.health -= slashDamage;
+                //     if (monster.instance.health <= 0)
+                //     {
+                //         GameObject monsterObject = enemyCollider.gameObject;
+                //         monsterObject.SetActive(false);
+                //         // Handle enemy death
+                //     }
+                // }
                 
-                else if (enemyCollider.CompareTag("Boss"))
+                if (enemyCollider.CompareTag("Boss"))
                 {
-                    BossController.instance.health -= slashDamage;
-                    if ( BossController.instance.health <= 0)
+                    GameObject enemyGameObject = enemyCollider.gameObject;
+                    BossController enemyScript = enemyGameObject.GetComponent<BossController>();
+                    enemyScript.health -= slashDamage;
+                    //enemyGameObject.health -= slashDamage;
+                    if ( enemyScript.health <= 0)
                     {
-                        BossController.instance.boss.SetActive(false);
+                        enemyGameObject.SetActive(false);
                         // Handle boss death
                     }
+                    
+                }
+                else if(enemyCollider.CompareTag("Root"))
+                {
+                    GameObject enemyGameObject = enemyCollider.gameObject;
+                    RootController enemyScript = enemyGameObject.GetComponent<RootController>();
+                    enemyScript.health -= slashDamage;
+                    //enemyGameObject.health -= slashDamage;
+                    // if ( enemyScript.health <= 0)
+                    // {
+                    //     enemyGameObject.SetActive(false);
+                    //     // Handle boss death
+                    // }
                     
                 }
             }

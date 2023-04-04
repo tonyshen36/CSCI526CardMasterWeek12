@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorController : MonoBehaviour
+public class RockpieceController : MonoBehaviour
 {
-    public GameObject boss;
-    public GameObject door;
-    
+    public GameObject rock;
+    public GameObject rockpiece;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,9 +15,10 @@ public class DoorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!boss.activeInHierarchy)
+        if (!rock.activeInHierarchy)
         {
-            door.SetActive(false);
+            rockpiece.SetActive(true);
         }
+     
     }
 }
