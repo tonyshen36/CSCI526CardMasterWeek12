@@ -35,6 +35,7 @@ public class BossController : MonoBehaviour
             if (!isCooldown && distanceToPlayer <= attackRange)
             {
                 StartCoroutine(StartAttacking());
+                StartCoroutine(Cooldown());
             }
         }
     }
@@ -69,6 +70,7 @@ public class BossController : MonoBehaviour
             }
             yield return null;
         }
+        
     }
 
     IEnumerator Dash()
@@ -87,9 +89,7 @@ public class BossController : MonoBehaviour
         float startPositionX = transform.position.x;
         float direction = Mathf.Sign(targetX - startPositionX);
         float dashStartTime = Time.time;
-   
-        
-        
+
         while (Time.time < dashStartTime + dashDuration)
         {
             float newX = transform.position.x + direction * dashSpeed * Time.deltaTime;
@@ -107,7 +107,7 @@ public class BossController : MonoBehaviour
         }
 
         isAttacking = false;
-        StartCoroutine(Cooldown());
+        //StartCoroutine(Cooldown());
     }
     
     IEnumerator JumpAttack()
@@ -163,7 +163,7 @@ public class BossController : MonoBehaviour
         transform.position = new Vector2(transform.position.x, initialHeight);
 
         isAttacking = false;
-        StartCoroutine(Cooldown());
+        //StartCoroutine(Cooldown());
     }
     
     IEnumerator Cooldown()
