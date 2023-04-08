@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlatformMovement : MonoBehaviour
 {
@@ -29,7 +30,12 @@ public class PlatformMovement : MonoBehaviour
                 PlayerController.instance.transform.Translate(new Vector3(direction * speed * Time.deltaTime, 0, 0));
             }
         }
-        
+        if (((transform.position.x < -9.5 || transform.position.x > 26.5) && transform.position.y < -10))//|| (transform.position.x > 20 && (transform.position.y < -2 || transform.position.y > 13.5)))
+        {
+            direction *= -1;
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            Debug.Log("pCollider");
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -47,7 +53,7 @@ public class PlatformMovement : MonoBehaviour
             isCollide = false;
         }
     }
-
+    /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("pCollider"))
@@ -61,5 +67,5 @@ public class PlatformMovement : MonoBehaviour
             isCollide = true;
         }
     }
-
+    */
 }
