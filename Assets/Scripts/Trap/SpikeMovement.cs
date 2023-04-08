@@ -4,31 +4,33 @@ using UnityEngine;
 
 public class SpikeMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public float moveSpeed = 5.0f;
-    
-    //public GameObject switcher;
-    
-    //public float closeness = 1.0f;
-    
-    // Update is called once per frame
-    public Vector3 startPos;
-   
+    public float range = 10.0f;
+    private Rigidbody2D rb;
+    private bool isMove = false;
     void Start()
     {
-        startPos = transform.position;
-    }
-    void Update()
-    {
-        if((PlayerController.instance.transform.position.x - transform.position.x)>=0 && ( PlayerController.instance.transform.position.x- transform.position.x) <=10 && PlayerController.instance.isUnderground)
-        // Move the object upward based on the move speed
-            
-            transform.Translate(Vector2.up * moveSpeed * Time.deltaTime) ;
-        else
-        {
-            
-            transform.position = startPos;
-        }
+        rb = GetComponent<Rigidbody2D>();
     }
 
+    void Update()
+    {
+        float distanceToPlayer = Mathf.Abs(PlayerController.instance.transform.position.x - transform.position.x);
+        if (distanceToPlayer <= range)
+        {
+            isMove = true;
+        }
+
+        if (isMove && PlayerController.instance.isUnderground)
+        {
+            // Set the rigidbody to be affected by gravity
+            rb.isKinematic = false;
+        }
+        else
+        {
+            // Make the spike kinematic and reset its position
+            rb.isKinematic = true;
+            rb.velocity = Vector2.zero;
+            transform.position = new Vector3(transform.position.x, Mathf.Round(transform.position.y), transform.position.z);
+        }
+    }
 }

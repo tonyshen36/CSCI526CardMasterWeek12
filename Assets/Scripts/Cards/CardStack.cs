@@ -49,7 +49,7 @@ public class CardStack : MonoBehaviour
                 cards.RemoveAt(0);
                 card.ActiveCard();
                 yield return new WaitForSeconds(1f);
-            // }
+             //}
         }
         executing = false;
     }
