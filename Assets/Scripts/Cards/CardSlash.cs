@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class CardSlash : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
-    public float waitTime = 1;
-    public float timeLeft = 0;
     private bool isDragging = false;
     private Vector2 startPosition;
     private bool enableDragging = true;

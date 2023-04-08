@@ -218,56 +218,56 @@ public class PlayerController : MonoBehaviour
         else { StartCoroutine(Move(-30)); }
     }
 
-    //private bool isSuperDashing = false;
-    public float superDashSpeed = 30f;
-    public float superDashDuration = 2f;
-
-    public void SuperDash()
-    {
-        StartCoroutine(SetSuperDashCollisionCoroutine(true));
-        StartCoroutine(SuperDashCoroutine());
-    }
-
-    private IEnumerator SuperDashCoroutine()
-    {
-        //SetSuperDashCollision(true);
-        //isSuperDashing = true;
-        moveWaitTime = 2f;
-        if (isMovingLeft) { moveTimeLeft += moveWaitTime; }
-        else if (isMovingRight) { moveTimeLeft = moveWaitTime; }
-        else
-        {
-            StartCoroutine(Move(15));
-        }
-        
-        yield return new WaitForSeconds(2f);
-        
-        
-        //isSuperDashing = false;
-        moveWaitTime = 0.2f;
-        // Re-enable collisions after the SuperDash
-        StartCoroutine(SetSuperDashCollisionCoroutine(false));
-    }
-    private IEnumerator SetSuperDashCollisionCoroutine(bool ignore)
-    {
-        // Wait for the next fixed update to ensure that the physics calculations are done after setting the collision state
-        yield return new WaitForFixedUpdate();
-
-        SetSuperDashCollision(ignore);
-    }
-
-    private void SetSuperDashCollision(bool enable)
-    {
-        int playerLayer = LayerMask.NameToLayer("Player");
-        int spikesLayer = LayerMask.NameToLayer("Spikes");
-        int enemiesLayer = LayerMask.NameToLayer("Enemies");
-
-        // When enabling the superdash, ignore collisions with spikes and enemies.
-        // When disabling the superdash, stop ignoring collisions with spikes and enemies.
-        Physics2D.IgnoreLayerCollision(playerLayer, spikesLayer, enable);
-        Physics2D.IgnoreLayerCollision(playerLayer, enemiesLayer, enable);
-    }
-    
+    // //private bool isSuperDashing = false;
+    // public float superDashSpeed = 30f;
+    // public float superDashDuration = 2f;
+    //
+    // public void SuperDash()
+    // {
+    //     StartCoroutine(SetSuperDashCollisionCoroutine(true));
+    //     StartCoroutine(SuperDashCoroutine());
+    // }
+    //
+    // private IEnumerator SuperDashCoroutine()
+    // {
+    //     //SetSuperDashCollision(true);
+    //     //isSuperDashing = true;
+    //     moveWaitTime = 2f;
+    //     if (isMovingLeft) { moveTimeLeft += moveWaitTime; }
+    //     else if (isMovingRight) { moveTimeLeft = moveWaitTime; }
+    //     else
+    //     {
+    //         StartCoroutine(Move(15));
+    //     }
+    //     
+    //     yield return new WaitForSeconds(2f);
+    //     
+    //     
+    //     //isSuperDashing = false;
+    //     moveWaitTime = 0.2f;
+    //     // Re-enable collisions after the SuperDash
+    //     StartCoroutine(SetSuperDashCollisionCoroutine(false));
+    // }
+    // private IEnumerator SetSuperDashCollisionCoroutine(bool ignore)
+    // {
+    //     // Wait for the next fixed update to ensure that the physics calculations are done after setting the collision state
+    //     yield return new WaitForFixedUpdate();
+    //
+    //     SetSuperDashCollision(ignore);
+    // }
+    //
+    // private void SetSuperDashCollision(bool enable)
+    // {
+    //     int playerLayer = LayerMask.NameToLayer("Player");
+    //     int spikesLayer = LayerMask.NameToLayer("Spikes");
+    //     int enemiesLayer = LayerMask.NameToLayer("Enemies");
+    //
+    //     // When enabling the superdash, ignore collisions with spikes and enemies.
+    //     // When disabling the superdash, stop ignoring collisions with spikes and enemies.
+    //     Physics2D.IgnoreLayerCollision(playerLayer, spikesLayer, enable);
+    //     Physics2D.IgnoreLayerCollision(playerLayer, enemiesLayer, enable);
+    // }
+    //
     private IEnumerator Move(float speed)
     {
         isMovingRight = true;
@@ -284,6 +284,12 @@ public class PlayerController : MonoBehaviour
         isMovingRight = false;
     }
     
+    public float shockDuration = 1f;
+    public float shockRange = 10f;
+    public int shockDamage = 5;
+    private Collider2D[] hitEnemies;
+    public GameObject lightningObject;
+    
     //Slash card operation
     public void Slash()
     {
@@ -291,13 +297,6 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(ElectricShockCoroutine());
     }
 
-    public float shockDuration = 1f;
-    public float shockRange = 10f;
-    public int shockDamage = 5;
-    private Collider2D[] hitEnemies;
-    
-    public GameObject lightningObject;
-    
     private IEnumerator ElectricShockCoroutine()
     {
         float startTime = Time.time;
@@ -321,15 +320,15 @@ public class PlayerController : MonoBehaviour
                     enemyScript.health -= shockDamage;
                     if (enemyScript.health <= 0)
                     {
-                        enemyGameObject.SetActive(false);
                         // Handle boss death
+                        enemyGameObject.SetActive(false);
                     }
 
                     UpdateLightningPositionAndScale(enemyGameObject);
 
                     // Set the lightning trigger to play the animation
                     Animator lightningAnimator = lightningObject.GetComponent<Animator>();
-                    lightningAnimator.SetTrigger("PlayLightning");
+                    lightningAnimator.SetTrigger("Playlightening");
 
                     lightningObject.SetActive(true);
                 }
@@ -343,32 +342,47 @@ public class PlayerController : MonoBehaviour
 
                     // Set the lightning trigger to play the animation
                     Animator lightningAnimator = lightningObject.GetComponent<Animator>();
-                    lightningAnimator.SetTrigger("PlayLightning");
+                    lightningAnimator.SetTrigger("Playlightening");
 
                     lightningObject.SetActive(true);
                 }
                 
-                else if (enemyCollider.CompareTag("Monster"))
+                else if (enemyCollider.CompareTag("Rock"))
                 {
                     GameObject enemyGameObject = enemyCollider.gameObject;
-                    monster enemyScript = enemyGameObject.GetComponent<monster>();
-                    enemyScript.health -= shockDamage;
-                    if (enemyScript.health <= 0)
-                    {
-                        enemyGameObject.SetActive(false);
-                        // Handle boss death
-                    }
-                    
+
                     UpdateLightningPositionAndScale(enemyGameObject);
-                
+
                     // Set the lightning trigger to play the animation
                     Animator lightningAnimator = lightningObject.GetComponent<Animator>();
-                    lightningAnimator.SetTrigger("PlayLightning");
-                
+                    lightningAnimator.SetTrigger("Playlightening");
+
                     lightningObject.SetActive(true);
-                    Debug.Log("The player monster!");
-                    
+                    yield return new WaitForSeconds(1f);
+                    enemyGameObject.SetActive(false);
                 }
+                
+                // else if (enemyCollider.CompareTag("Monster"))
+                // {
+                //     GameObject enemyGameObject = enemyCollider.gameObject;
+                //     MonsterController enemyScript = enemyGameObject.GetComponent<MonsterController>();
+                //     enemyScript.health -= shockDamage;
+                //     if (enemyScript.health <= 0)
+                //     {
+                //         enemyGameObject.SetActive(false);
+                //         // Handle boss death
+                //     }
+                //     
+                //     UpdateLightningPositionAndScale(enemyGameObject);
+                //
+                //     // Set the lightning trigger to play the animation
+                //     Animator lightningAnimator = lightningObject.GetComponent<Animator>();
+                //     lightningAnimator.SetTrigger("Playlightening");
+                //
+                //     lightningObject.SetActive(true);
+                //     Debug.Log("The player monster!");
+                //     
+                // }
             }
 
             yield return null;
@@ -382,6 +396,9 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateLightningPositionAndScale(GameObject enemyGameObject)
     {
+        // Store the original player position
+        //Vector3 originalPlayerPosition = transform.position;
+        
         // Update the position and rotation of the lightning
         Vector3 direction = enemyGameObject.transform.position - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -397,6 +414,9 @@ public class PlayerController : MonoBehaviour
         lightningObject.transform.position = (transform.position + enemyGameObject.transform.position) / 2;
 
         lightningObject.transform.rotation = rotation;
+        
+        // Reset the player's position to the original position
+        //transform.position = originalPlayerPosition;
     }
 
     public void sendCardStatToAnalyzer(bool result)

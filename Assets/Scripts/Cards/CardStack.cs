@@ -33,23 +33,23 @@ public class CardStack : MonoBehaviour
     {
         while (cards.Count > 0)
         {
-            if (cards.Count == 2 && cards[0].GetCardType() == CardEnum.Dash && cards[1].GetCardType() == CardEnum.Dash)
-            {
-                ICard card1 = cards[0];
-                ICard card2 = cards[1];
-                cards.RemoveAt(0);
-                cards.RemoveAt(0);
-                PlayerController.instance.SuperDash();
-                card1.RemoveCard();
-                card2.RemoveCard();
-            }
-            else
-            {
+            // if (cards.Count == 2 && cards[0].GetCardType() == CardEnum.Dash && cards[1].GetCardType() == CardEnum.Dash)
+            // {
+            //     ICard card1 = cards[0];
+            //     ICard card2 = cards[1];
+            //     cards.RemoveAt(0);
+            //     cards.RemoveAt(0);
+            //     PlayerController.instance.SuperDash();
+            //     card1.RemoveCard();
+            //     card2.RemoveCard();
+            // }
+            // else
+            // {
                 ICard card = cards[0];
                 cards.RemoveAt(0);
                 card.ActiveCard();
                 yield return new WaitForSeconds(1f);
-            }
+            // }
         }
         executing = false;
     }

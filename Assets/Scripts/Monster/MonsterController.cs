@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class monster : MonoBehaviour
+public class MonsterController : MonoBehaviour
 {
     private float speed = 1.0f;
     private bool moveRight = true;
