@@ -25,12 +25,16 @@ public class CardMove : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExit
     public void ActiveCard()
     {
         PlayerController.instance.MoveRight();
+        RemoveCard();
+    }
+
+    public void RemoveCard()
+    {
         CardManager.instance.currentCardCount--;
         CardManager.instance.handCards.Remove(this.gameObject);
         CardManager.instance.moveCardsInHand--;
         Destroy(gameObject);
     }
-
     void Update()
     {
         if (isDragging && enableDragging)

@@ -73,6 +73,8 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(0, 0);
             moveTimeLeft = 0;
         }
+        
+        
     }
     
     // private void OnCollisionEnter2D(Collision2D collision)
@@ -150,7 +152,9 @@ public class PlayerController : MonoBehaviour
             {
                 colliObject.SetActive(false);
             }
+            Debug.Log("Rock collision");
         }
+        
         else if (collision.gameObject.tag == "key")
         {
             GameObject doorObject = GameObject.FindWithTag("door");
@@ -158,6 +162,20 @@ public class PlayerController : MonoBehaviour
             Destroy(doorObject);
             Destroy(keyObject);
             Debug.Log("Key get");
+        }
+    }
+
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Rock")
+        {
+            GameObject colliObject = collision.gameObject;
+            if (acc > 20)
+            {
+                colliObject.SetActive(false);
+            }
+
+            Debug.Log("Rock collision");
         }
     }
 
@@ -199,6 +217,72 @@ public class PlayerController : MonoBehaviour
         else if (isMovingRight) { moveTimeLeft = moveWaitTime; }
         else { StartCoroutine(Move(-30)); }
     }
+
+    //private bool isSuperDashing = false;
+    public float superDashSpeed = 30f;
+    public float superDashDuration = 2f;
+
+    public void SuperDash()
+    {
+        StartCoroutine(SetSuperDashCollisionCoroutine(true));
+        StartCoroutine(SuperDashCoroutine());
+    }
+
+    private IEnumerator SuperDashCoroutine()
+    {
+        //SetSuperDashCollision(true);
+        //isSuperDashing = true;
+        moveWaitTime = 2f;
+        if (isMovingLeft) { moveTimeLeft += moveWaitTime; }
+        else if (isMovingRight) { moveTimeLeft = moveWaitTime; }
+        else
+        {
+            StartCoroutine(Move(15));
+        }
+        
+        yield return new WaitForSeconds(2f);
+        
+        
+        //isSuperDashing = false;
+        moveWaitTime = 0.2f;
+        // Re-enable collisions after the SuperDash
+        StartCoroutine(SetSuperDashCollisionCoroutine(false));
+    }
+    private IEnumerator SetSuperDashCollisionCoroutine(bool ignore)
+    {
+        // Wait for the next fixed update to ensure that the physics calculations are done after setting the collision state
+        yield return new WaitForFixedUpdate();
+
+        SetSuperDashCollision(ignore);
+    }
+
+    private void SetSuperDashCollision(bool enable)
+    {
+        int playerLayer = LayerMask.NameToLayer("Player");
+        int spikesLayer = LayerMask.NameToLayer("Spikes");
+        int enemiesLayer = LayerMask.NameToLayer("Enemies");
+
+        // When enabling the superdash, ignore collisions with spikes and enemies.
+        // When disabling the superdash, stop ignoring collisions with spikes and enemies.
+        Physics2D.IgnoreLayerCollision(playerLayer, spikesLayer, enable);
+        Physics2D.IgnoreLayerCollision(playerLayer, enemiesLayer, enable);
+    }
+    
+    private IEnumerator Move(float speed)
+    {
+        isMovingRight = true;
+        moveTimeLeft = moveWaitTime;
+        acc = speed;
+        while (moveTimeLeft > 0)
+        {
+            //acc = Mathf.Lerp(0, 10, (waitTime - timeLeft) / waitTime);
+            //PlayerController.instance.acc = acc;
+            moveTimeLeft -= Time.deltaTime;
+            yield return null;
+        }
+        acc = 0;
+        isMovingRight = false;
+    }
     
     //Slash card operation
     public void Slash()
@@ -215,102 +299,109 @@ public class PlayerController : MonoBehaviour
     public GameObject lightningObject;
     
     private IEnumerator ElectricShockCoroutine()
-{
-    float startTime = Time.time;
-
-    // Use a BoxCollider2D for the wider attack range
-    BoxCollider2D shockCollider = gameObject.AddComponent<BoxCollider2D>();
-    shockCollider.isTrigger = true;
-    shockCollider.size = new Vector2(shockRange, shockRange);
-    
-    while (Time.time < startTime + shockDuration)
     {
-        hitEnemies = Physics2D.OverlapBoxAll(transform.position, new Vector2(shockRange, shockRange), 0);
+        float startTime = Time.time;
 
-        foreach (Collider2D enemyCollider in hitEnemies)
+        // Use a BoxCollider2D for the wider attack range
+        BoxCollider2D shockCollider = gameObject.AddComponent<BoxCollider2D>();
+        shockCollider.isTrigger = true;
+        shockCollider.size = new Vector2(shockRange, shockRange);
+        
+        while (Time.time < startTime + shockDuration )
         {
-            // Apply damage and instantiate lightning effect
-            if (enemyCollider.CompareTag("Boss"))
+            hitEnemies = Physics2D.OverlapBoxAll(transform.position, new Vector2(shockRange, shockRange), 0);
+
+            foreach (Collider2D enemyCollider in hitEnemies)
             {
-                GameObject enemyGameObject = enemyCollider.gameObject;
-                BossController enemyScript = enemyGameObject.GetComponent<BossController>();
-                enemyScript.health -= shockDamage;
-                if (enemyScript.health <= 0)
+                // Apply damage and instantiate lightning effect
+                if (enemyCollider.CompareTag("Boss"))
                 {
-                    enemyGameObject.SetActive(false);
-                    // Handle boss death
+                    GameObject enemyGameObject = enemyCollider.gameObject;
+                    BossController enemyScript = enemyGameObject.GetComponent<BossController>();
+                    enemyScript.health -= shockDamage;
+                    if (enemyScript.health <= 0)
+                    {
+                        enemyGameObject.SetActive(false);
+                        // Handle boss death
+                    }
+
+                    UpdateLightningPositionAndScale(enemyGameObject);
+
+                    // Set the lightning trigger to play the animation
+                    Animator lightningAnimator = lightningObject.GetComponent<Animator>();
+                    lightningAnimator.SetTrigger("PlayLightning");
+
+                    lightningObject.SetActive(true);
                 }
+                else if (enemyCollider.CompareTag("Root"))
+                {
+                    GameObject enemyGameObject = enemyCollider.gameObject;
+                    RootController enemyScript = enemyGameObject.GetComponent<RootController>();
+                    enemyScript.health -= shockDamage;
+                    
+                    UpdateLightningPositionAndScale(enemyGameObject);
 
-                UpdateLightningPositionAndScale(enemyGameObject);
+                    // Set the lightning trigger to play the animation
+                    Animator lightningAnimator = lightningObject.GetComponent<Animator>();
+                    lightningAnimator.SetTrigger("PlayLightning");
 
-                // Set the lightning trigger to play the animation
-                Animator lightningAnimator = lightningObject.GetComponent<Animator>();
-                lightningAnimator.SetTrigger("PlayLightning");
-
-                lightningObject.SetActive(true);
-            }
-            else if (enemyCollider.CompareTag("Root"))
-            {
-                GameObject enemyGameObject = enemyCollider.gameObject;
-                RootController enemyScript = enemyGameObject.GetComponent<RootController>();
-                enemyScript.health -= shockDamage;
+                    lightningObject.SetActive(true);
+                }
                 
-                UpdateLightningPositionAndScale(enemyGameObject);
-
-                // Set the lightning trigger to play the animation
-                Animator lightningAnimator = lightningObject.GetComponent<Animator>();
-                lightningAnimator.SetTrigger("PlayLightning");
-
-                lightningObject.SetActive(true);
+                else if (enemyCollider.CompareTag("Monster"))
+                {
+                    GameObject enemyGameObject = enemyCollider.gameObject;
+                    monster enemyScript = enemyGameObject.GetComponent<monster>();
+                    enemyScript.health -= shockDamage;
+                    if (enemyScript.health <= 0)
+                    {
+                        enemyGameObject.SetActive(false);
+                        // Handle boss death
+                    }
+                    
+                    UpdateLightningPositionAndScale(enemyGameObject);
+                
+                    // Set the lightning trigger to play the animation
+                    Animator lightningAnimator = lightningObject.GetComponent<Animator>();
+                    lightningAnimator.SetTrigger("PlayLightning");
+                
+                    lightningObject.SetActive(true);
+                    Debug.Log("The player monster!");
+                    
+                }
             }
+
+            yield return null;
         }
 
-        yield return null;
+        lightningObject.SetActive(false);
+
+        // Remove the shock collider and lightning effect after the electric shock is complete
+        Destroy(shockCollider);
     }
 
-    lightningObject.SetActive(false);
+    private void UpdateLightningPositionAndScale(GameObject enemyGameObject)
+    {
+        // Update the position and rotation of the lightning
+        Vector3 direction = enemyGameObject.transform.position - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
-    // Remove the shock collider and lightning effect after the electric shock is complete
-    Destroy(shockCollider);
-}
+        // Calculate the distance between the player and the enemy
+        float distance = Vector3.Distance(transform.position, enemyGameObject.transform.position);
 
-private void UpdateLightningPositionAndScale(GameObject enemyGameObject)
-{
-    // Update the position and rotation of the lightning
-    Vector3 direction = enemyGameObject.transform.position - transform.position;
-    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-    Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        // Set the lightning's scale based on the distance
+        lightningObject.transform.localScale = new Vector3(distance, lightningObject.transform.localScale.y, lightningObject.transform.localScale.z);
 
-    // Calculate the distance between the player and the enemy
-    float distance = Vector3.Distance(transform.position, enemyGameObject.transform.position);
+        // Set the lightning's position to be in the middle of the player and the enemy
+        lightningObject.transform.position = (transform.position + enemyGameObject.transform.position) / 2;
 
-    // Set the lightning's scale based on the distance
-    lightningObject.transform.localScale = new Vector3(distance, lightningObject.transform.localScale.y, lightningObject.transform.localScale.z);
-
-    // Set the lightning's position to be in the middle of the player and the enemy
-    lightningObject.transform.position = (transform.position + enemyGameObject.transform.position) / 2;
-
-    lightningObject.transform.rotation = rotation;
-}
+        lightningObject.transform.rotation = rotation;
+    }
 
     public void sendCardStatToAnalyzer(bool result)
     {
         Analyzer.instance.sendCardData(result, move_counter, back_counter, jump_counter, dash_counter);
     }
 
-    private IEnumerator Move(float speed)
-    {
-        isMovingRight = true;
-        moveTimeLeft = moveWaitTime;
-        acc = speed;
-        while (moveTimeLeft > 0)
-        {
-            //acc = Mathf.Lerp(0, 10, (waitTime - timeLeft) / waitTime);
-            //PlayerController.instance.acc = acc;
-            moveTimeLeft -= Time.deltaTime;
-            yield return null;
-        }
-        acc = 0;
-        isMovingRight = false;
-    }
 }

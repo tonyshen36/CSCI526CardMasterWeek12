@@ -22,6 +22,11 @@ public class CardJump : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExit
     public void ActiveCard()
     {
         PlayerController.instance.Jump();
+        RemoveCard();
+    }
+
+    public void RemoveCard()
+    {
         CardManager.instance.currentCardCount--;
         CardManager.instance.handCards.Remove(this.gameObject);
         CardManager.instance.jumpCardsInHand--;

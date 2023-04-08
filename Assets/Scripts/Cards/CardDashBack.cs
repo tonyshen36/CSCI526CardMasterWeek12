@@ -25,12 +25,16 @@ public class CardDashBack : MonoBehaviour, ICard, IPointerEnterHandler, IPointer
     public void ActiveCard()
     {
         PlayerController.instance.DashBack();
-        CardManager.instance.currentCardCount--;
-        CardManager.instance.handCards.Remove(this.gameObject);
-        CardManager.instance.dashCardsInHand--;
-        Destroy(gameObject);
+        RemoveCard();
     }
 
+    public void RemoveCard()
+    {
+        CardManager.instance.currentCardCount--;
+        CardManager.instance.handCards.Remove(this.gameObject);
+        CardManager.instance.dashBackCardsInHand--;
+        Destroy(gameObject);
+    }
     void Update()
     {
         if (isDragging && enableDragging)

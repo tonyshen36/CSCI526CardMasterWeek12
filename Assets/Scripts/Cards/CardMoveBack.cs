@@ -24,6 +24,11 @@ public class CardMoveBack : MonoBehaviour, ICard, IPointerEnterHandler, IPointer
     public void ActiveCard()
     {
         PlayerController.instance.MoveBack();
+        RemoveCard();
+    }
+
+    public void RemoveCard()
+    {
         CardManager.instance.currentCardCount--;
         CardManager.instance.handCards.Remove(this.gameObject);
         CardManager.instance.moveBackCardsInHand--;

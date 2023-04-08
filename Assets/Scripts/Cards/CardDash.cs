@@ -25,12 +25,17 @@ public class CardDash : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExit
     public void ActiveCard()
     {
         PlayerController.instance.Dash();
+        RemoveCard();
+    }
+
+    public void RemoveCard()
+    {
         CardManager.instance.currentCardCount--;
         CardManager.instance.handCards.Remove(this.gameObject);
         CardManager.instance.dashCardsInHand--;
         Destroy(gameObject);
     }
-
+    
     void Update()
     {
         if (isDragging && enableDragging)

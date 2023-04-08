@@ -9,26 +9,25 @@ public class CardSlash : MonoBehaviour, ICard, IPointerEnterHandler, IPointerExi
 {
     public float waitTime = 1;
     public float timeLeft = 0;
-
     private bool isDragging = false;
-
     private Vector2 startPosition;
-
     private bool enableDragging = true;
-
     private Tween tween;
-
     private int sibilingIndex;
     public CardEnum cardType = CardEnum.Slash;
     public void ActiveCard()
     {
         PlayerController.instance.Slash();
+        RemoveCard();
+    }
+
+    public void RemoveCard()
+    {
         CardManager.instance.currentCardCount--;
         CardManager.instance.handCards.Remove(this.gameObject);
         CardManager.instance.slashCardsInHand--;
         Destroy(gameObject);
     }
-
     void Update()
     {
         if (isDragging && enableDragging)
