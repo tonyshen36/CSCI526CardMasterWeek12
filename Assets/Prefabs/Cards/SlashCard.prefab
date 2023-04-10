@@ -177,7 +177,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: -2199983891933747449}
           m_TargetAssemblyTypeName: CardSlash, Assembly-CSharp
-          m_MethodName: DisableDragging
+          m_MethodName: EndDrag
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -193,7 +193,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: -2199983891933747449}
           m_TargetAssemblyTypeName: CardSlash, Assembly-CSharp
-          m_MethodName: EnableDragging
+          m_MethodName: StartDrag
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
