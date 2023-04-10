@@ -35982,7 +35982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: febfbfff6fd2a8c4ab1b1caedfc4e42a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfCards: 7
+  numberOfCards: 15
 --- !u!1 &985674858 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 98224018093143606, guid: 635958d3bd89f96429a3c77e6c49ca75, type: 3}
@@ -36195,9 +36195,13 @@ PrefabInstance:
       propertyPath: numberOfCards
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7187153854741912277, guid: 4ea1103b719dafa4bb1f9fbd190d8a54, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7187153855249097780, guid: 4ea1103b719dafa4bb1f9fbd190d8a54, type: 3}
       propertyPath: m_text
-      value: "3 Move \nBack"
+      value: "15 Move \nBack"
       objectReference: {fileID: 0}
     - target: {fileID: 7187153856356582369, guid: 4ea1103b719dafa4bb1f9fbd190d8a54, type: 3}
       propertyPath: m_Pivot.x
@@ -38644,6 +38648,14 @@ PrefabInstance:
       propertyPath: DashBackCardPrefab
       value: 
       objectReference: {fileID: 2567464198922249231, guid: 835d3b85b0df049788c3c6e71d26862b, type: 3}
+    - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
+      propertyPath: startingDashBackCard
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4085340986959499122, guid: 58afb289f0738e04e802a725b158d202, type: 3}
+      propertyPath: startingMoveBackCard
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5420827168725349638, guid: 58afb289f0738e04e802a725b158d202, type: 3}
       propertyPath: m_Name
       value: PF-HandRegion
