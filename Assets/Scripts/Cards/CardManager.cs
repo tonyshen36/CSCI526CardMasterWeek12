@@ -55,6 +55,16 @@ public class CardManager : MonoBehaviour
     public int RedrawTimes = 0;
     public int RedrawLimit = 5;
 
+    private static int Move_Index = 0;
+    private static int MoveBack_Index = 1;
+    private static int Jump_Index = 2;
+    private static int Dash_Index = 3;
+    private static int DashBack_Index = 4;
+    private static int Slash_Index = 5;
+
+    private static int Card_Type_Number = 6;
+
+    
     // Start is called before the first frame update
     void Awake()
     {
@@ -209,6 +219,165 @@ public class CardManager : MonoBehaviour
         }*/
     }
 
+
+    private int getCardInHand(int current_type)
+    {
+        if (current_type == 0)
+        {
+            return moveCardsInHand;
+        } else if (current_type == 1)
+        {
+            return moveBackCardsInHand;
+        } else if (current_type == 2)
+        {
+            return jumpCardsInHand;
+        } else if (current_type == 3)
+        {
+            return dashCardsInHand;
+        } else if (current_type == 4)
+        {
+            return dashBackCardsInHand;
+        }
+        return slashCardsInHand;
+    }
+
+    private bool isGoodChoice(int current_type)
+    {
+        int current_in_hand = getCardInHand(current_type);
+        if (current_in_hand == 2)
+        {
+            int prob = Random.Range(0, 10);
+            if (prob >= 2)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+        if (current_in_hand == 3)
+        {
+            int prob = Random.Range(0, 10);
+            if (prob >= 5)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+        if (current_in_hand == 4)
+        {
+            int prob = Random.Range(0, 10);
+            if (prob >= 8)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    private int RedrawCards()
+    {
+        if (remainingJumpCards > 0 || remainingMoveBackCards > 0 || remainingDashCards > 0 || remainingDashBackCards > 0 || remainingSlashCards > 0 || remainingMoveCards > 0)
+        {
+            int randomTarget = Random.Range(0, 6);
+            while (isRemaining(randomTarget) == false || isGoodChoice(randomTarget) == false)
+            {
+                randomTarget = Random.Range(0, 6);
+            }
+
+            CardEnum targetEnum;
+            if (randomTarget == 0)
+            {
+                targetEnum = CardEnum.Move;
+            }
+            else if (randomTarget == 1)
+            {
+                targetEnum = CardEnum.MoveBack;
+            }
+            else if (randomTarget == 2)
+            {
+                targetEnum = CardEnum.Jump;
+            }
+            else if (randomTarget == 3)
+            {
+                targetEnum = CardEnum.Dash;
+            }
+            else if (randomTarget == 4)
+            {
+                targetEnum = CardEnum.DashBack;
+            }
+            else
+            {
+                targetEnum = CardEnum.Slash;
+            }
+
+            for (int i = 0; i < cardsInDeck.Count; i++)
+            {
+                if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
+                {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    private bool isRemaining(int number)
+    {
+        if (number == Move_Index)
+        {
+            if (remainingMoveCards <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
+        else if (number == MoveBack_Index)
+        {
+            if (remainingMoveBackCards <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
+        else if (number == Dash_Index)
+        {
+            if (remainingDashCards <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
+        else if (number == DashBack_Index)
+        {
+            if (remainingDashBackCards <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
+        else if (number == Jump_Index)
+        {
+            if (remainingJumpCards <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
+        else
+        {
+            if (remainingSlashCards <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
+    }
+
     IEnumerator UpdateHand()
     {
         while (currentCardCount != 0 || cardsInDeck.Count != 0)
@@ -216,914 +385,7 @@ public class CardManager : MonoBehaviour
             if (currentCardCount < 5 && cardsInDeck.Count >= 1)
             {
                 int cardChoice = -1;
-                if (moveCardsInHand == 4 && (remainingJumpCards > 0 || remainingMoveBackCards > 0 || remainingDashCards > 0 || remainingDashBackCards > 0 || remainingSlashCards > 0))
-                {
-                    if (remainingJumpCards > 0 && remainingDashBackCards > 0 && remainingDashCards > 0 && remainingMoveBackCards > 0 && remainingSlashCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 5);
-                        if (randomTarget == 0) targetEnum = CardEnum.Jump;
-                        else if (randomTarget == 1) targetEnum = CardEnum.Dash;
-                        else if (randomTarget == 2) targetEnum = CardEnum.MoveBack;
-                        else if (randomTarget == 3) targetEnum = CardEnum.Slash;
-                        else targetEnum = CardEnum.DashBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingJumpCards > 0 && remainingDashBackCards > 0 && remainingMoveBackCards > 0 && remainingSlashCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 4);
-                        if (randomTarget == 0) targetEnum = CardEnum.Jump;
-                        else if (randomTarget == 1) targetEnum = CardEnum.MoveBack;
-                        else if (randomTarget == 2) targetEnum = CardEnum.Slash;
-                        else targetEnum = CardEnum.DashBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashCards > 0 && remainingDashBackCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.Dash;
-                        else if (randomTarget == 1) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.DashBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashCards > 0 && remainingJumpCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.Dash;
-                        else if (randomTarget == 1) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.Jump;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashCards > 0 && remainingJumpCards > 0 && remainingDashBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.Dash;
-                        else if (randomTarget == 1) targetEnum = CardEnum.DashBack;
-                        else targetEnum = CardEnum.Jump;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingJumpCards > 0 && remainingDashCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 2);
-                        if (randomTarget == 0) targetEnum = CardEnum.Jump;
-                        else targetEnum = CardEnum.Dash;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashBackCards > 0 && remainingDashCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.DashBack;
-                        else targetEnum = CardEnum.Dash;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingMoveBackCards > 0 && remainingDashCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.Dash;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingJumpCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Jump;
-                        else targetEnum = CardEnum.MoveBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashBackCards > 0 && remainingJumpCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.DashBack;
-                        else targetEnum = CardEnum.Jump;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashBackCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.DashBack;
-                        else targetEnum = CardEnum.MoveBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() != CardEnum.Move)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                }
-                else if (moveBackCardsInHand == 4 && (remainingJumpCards > 0 || remainingMoveCards > 0 || remainingDashCards > 0 || remainingDashBackCards > 0))
-                {
-                    if (remainingJumpCards > 0 && remainingMoveCards > 0 && remainingDashCards > 0 && remainingDashBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 4);
-                        if (randomTarget == 0) targetEnum = CardEnum.Jump;
-                        else if (randomTarget == 1) targetEnum = CardEnum.Dash;
-                        else if (randomTarget == 2) targetEnum = CardEnum.DashBack;
-                        else targetEnum = CardEnum.Move;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingJumpCards > 0 && remainingMoveCards > 0 && remainingDashBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.Jump;
-                        else if (randomTarget == 1) targetEnum = CardEnum.DashBack;
-                        else targetEnum = CardEnum.Move;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashCards > 0 && remainingMoveCards > 0 && remainingDashBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.Dash;
-                        else if (randomTarget == 1) targetEnum = CardEnum.DashBack;
-                        else targetEnum = CardEnum.Move;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashCards > 0 && remainingJumpCards > 0 && remainingDashBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.Dash;
-                        else if (randomTarget == 1) targetEnum = CardEnum.DashBack;
-                        else targetEnum = CardEnum.Jump;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashCards > 0 && remainingJumpCards > 0 && remainingMoveCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.Dash;
-                        else if (randomTarget == 1) targetEnum = CardEnum.Move;
-                        else targetEnum = CardEnum.Jump;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingJumpCards > 0 && remainingDashCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 2);
-                        if (randomTarget == 0) targetEnum = CardEnum.Jump;
-                        else targetEnum = CardEnum.Dash;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingMoveCards > 0 && remainingDashCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Move;
-                        else targetEnum = CardEnum.Dash;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashBackCards > 0 && remainingDashCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.DashBack;
-                        else targetEnum = CardEnum.Dash;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingJumpCards > 0 && remainingDashBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Jump;
-                        else targetEnum = CardEnum.DashBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingMoveCards > 0 && remainingJumpCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Move;
-                        else targetEnum = CardEnum.Jump;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingMoveCards > 0 && remainingDashBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Move;
-                        else targetEnum = CardEnum.DashBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() != CardEnum.MoveBack)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                }
-                else if (jumpCardsInHand == 4 && (remainingMoveBackCards > 0 || remainingMoveCards > 0 || remainingDashCards > 0 || remainingDashBackCards > 0))
-                {
-                    if (remainingDashBackCards > 0 && remainingMoveCards > 0 && remainingDashCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 4);
-                        if (randomTarget == 0) targetEnum = CardEnum.DashBack;
-                        else if (randomTarget == 1) targetEnum = CardEnum.Dash;
-                        else if (randomTarget == 2) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.Move;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashBackCards > 0 && remainingMoveCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.DashBack;
-                        else if (randomTarget == 1) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.Move;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashCards > 0 && remainingMoveCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.Dash;
-                        else if (randomTarget == 1) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.Move;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashCards > 0 && remainingDashBackCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.Dash;
-                        else if (randomTarget == 1) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.DashBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashCards > 0 && remainingDashBackCards > 0 && remainingMoveCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.Dash;
-                        else if (randomTarget == 1) targetEnum = CardEnum.Move;
-                        else targetEnum = CardEnum.DashBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashBackCards > 0 && remainingDashCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 2);
-                        if (randomTarget == 0) targetEnum = CardEnum.DashBack;
-                        else targetEnum = CardEnum.Dash;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingMoveCards > 0 && remainingDashCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Move;
-                        else targetEnum = CardEnum.Dash;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingMoveBackCards > 0 && remainingDashCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.Dash;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashBackCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.DashBack;
-                        else targetEnum = CardEnum.MoveBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingMoveCards > 0 && remainingDashBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Move;
-                        else targetEnum = CardEnum.DashBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingMoveCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Move;
-                        else targetEnum = CardEnum.MoveBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() != CardEnum.Jump)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-
-                }
-                else if (dashCardsInHand == 4 && (remainingMoveBackCards > 0 || remainingMoveCards > 0 || remainingJumpCards > 0 || remainingDashBackCards > 0))
-                {
-                    if (remainingJumpCards > 0 && remainingMoveCards > 0 && remainingDashBackCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 4);
-                        if (randomTarget == 0) targetEnum = CardEnum.Jump;
-                        else if (randomTarget == 1) targetEnum = CardEnum.DashBack;
-                        else if (randomTarget == 2) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.Move;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingJumpCards > 0 && remainingMoveCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.Jump;
-                        else if (randomTarget == 1) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.Move;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashBackCards > 0 && remainingMoveCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.DashBack;
-                        else if (randomTarget == 1) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.Move;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashBackCards > 0 && remainingJumpCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.DashBack;
-                        else if (randomTarget == 1) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.Jump;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashBackCards > 0 && remainingJumpCards > 0 && remainingMoveCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.DashBack;
-                        else if (randomTarget == 1) targetEnum = CardEnum.Move;
-                        else targetEnum = CardEnum.Jump;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingJumpCards > 0 && remainingDashBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 2);
-                        if (randomTarget == 0) targetEnum = CardEnum.Jump;
-                        else targetEnum = CardEnum.DashBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingMoveCards > 0 && remainingDashBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Move;
-                        else targetEnum = CardEnum.DashBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingMoveBackCards > 0 && remainingDashBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.DashBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingJumpCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Jump;
-                        else targetEnum = CardEnum.MoveBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingMoveCards > 0 && remainingJumpCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Move;
-                        else targetEnum = CardEnum.Jump;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingMoveCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Move;
-                        else targetEnum = CardEnum.MoveBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() != CardEnum.Dash)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-
-                }
-                else if (dashBackCardsInHand == 4 && (remainingDashCards > 0 || remainingJumpCards > 0 || remainingMoveCards > 0 || remainingMoveBackCards > 0))
-                {
-                    if (remainingJumpCards > 0 && remainingMoveCards > 0 && remainingDashCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 4);
-                        if (randomTarget == 0) targetEnum = CardEnum.Jump;
-                        else if (randomTarget == 1) targetEnum = CardEnum.Dash;
-                        else if (randomTarget == 2) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.Move;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingJumpCards > 0 && remainingMoveCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.Jump;
-                        else if (randomTarget == 1) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.Move;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashCards > 0 && remainingMoveCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.Dash;
-                        else if (randomTarget == 1) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.Move;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashCards > 0 && remainingJumpCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.Dash;
-                        else if (randomTarget == 1) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.Jump;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingDashCards > 0 && remainingJumpCards > 0 && remainingMoveCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 3);
-                        if (randomTarget == 0) targetEnum = CardEnum.Dash;
-                        else if (randomTarget == 1) targetEnum = CardEnum.Move;
-                        else targetEnum = CardEnum.Jump;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingJumpCards > 0 && remainingDashCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        int randomTarget = Random.Range(0, 2);
-                        if (randomTarget == 0) targetEnum = CardEnum.Jump;
-                        else targetEnum = CardEnum.Dash;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingMoveCards > 0 && remainingDashCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Move;
-                        else targetEnum = CardEnum.Dash;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingMoveBackCards > 0 && remainingDashCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.MoveBack;
-                        else targetEnum = CardEnum.Dash;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingJumpCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Jump;
-                        else targetEnum = CardEnum.MoveBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingMoveCards > 0 && remainingJumpCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Move;
-                        else targetEnum = CardEnum.Jump;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else if (remainingMoveCards > 0 && remainingMoveBackCards > 0)
-                    {
-                        CardEnum targetEnum;
-                        if (Random.Range(0, 2) == 0) targetEnum = CardEnum.Move;
-                        else targetEnum = CardEnum.MoveBack;
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() == targetEnum)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < cardsInDeck.Count; i++)
-                        {
-                            if (cardsInDeck[i].GetComponent<ICard>().GetCardType() != CardEnum.DashBack)
-                            {
-                                cardChoice = i;
-                                break;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    cardChoice = Random.Range(0, cardsInDeck.Count);
-                }
+                cardChoice = RedrawCards();
 
                 CardEnum cardType = cardsInDeck[cardChoice].GetComponent<ICard>().GetCardType();
                 switch (cardType)
