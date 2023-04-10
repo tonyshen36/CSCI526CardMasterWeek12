@@ -471,17 +471,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &96347811 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3505759588859876147, guid: 5f81b39fa16acba4a908002700e3bd80, type: 3}
-  m_PrefabInstance: {fileID: 1059986215}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &118485383
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10362,14 +10351,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 684271081}
     m_Modifications:
-    - target: {fileID: 2042423901224265620, guid: 5f81b39fa16acba4a908002700e3bd80, type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2042423903063241288, guid: 5f81b39fa16acba4a908002700e3bd80, type: 3}
-      propertyPath: slash
-      value: 
-      objectReference: {fileID: 96347811}
     - target: {fileID: 2042423903063241294, guid: 5f81b39fa16acba4a908002700e3bd80, type: 3}
       propertyPath: m_Name
       value: PF-RemainingCardsCount
@@ -10457,18 +10438,6 @@ PrefabInstance:
     - target: {fileID: 2042423903063241295, guid: 5f81b39fa16acba4a908002700e3bd80, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3543874113747156732, guid: 5f81b39fa16acba4a908002700e3bd80, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6628081218814131222, guid: 5f81b39fa16acba4a908002700e3bd80, type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8829180750980632875, guid: 5f81b39fa16acba4a908002700e3bd80, type: 3}
-      propertyPath: m_RootOrder
-      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f81b39fa16acba4a908002700e3bd80, type: 3}

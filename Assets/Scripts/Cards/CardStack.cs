@@ -9,6 +9,12 @@ public class CardStack : MonoBehaviour
 
     public List<ICard> cards;
 
+    public Sprite number1;
+    public Sprite number2;
+    public Sprite number3;
+    public Sprite number4;
+    public Sprite number5;
+
     private void Awake()
     {
         if (CardStack.instance == null)
@@ -26,7 +32,7 @@ public class CardStack : MonoBehaviour
 
     public void executeCards()
     {
-        if(!executing) { executing = true; StartCoroutine(wait()); }
+        if (!executing) { executing = true; StartCoroutine(wait()); }
     }
 
     public IEnumerator wait()
@@ -45,13 +51,43 @@ public class CardStack : MonoBehaviour
             // }
             // else
             // {
-                ICard card = cards[0];
-                cards.RemoveAt(0);
-                card.ActiveCard();
-                yield return new WaitForSeconds(1f);
-             //}
+            ICard card = cards[0];
+            cards.RemoveAt(0);
+            card.ActiveCard();
+            yield return new WaitForSeconds(1f);
+            //}
         }
         executing = false;
     }
 
+    public void ArrangeNumber()
+    {
+        if (cards.Count > 0)
+        {
+            int counter = 1;
+            foreach (ICard card in cards)
+            {
+                switch (counter)
+                {
+                    case 1:
+                        card.EnableNumber(number1);
+                        break;
+                    case 2:
+                        card.EnableNumber(number2);
+                        break;
+                    case 3:
+                        card.EnableNumber(number3);
+                        break;
+                    case 4:
+                        card.EnableNumber(number4);
+                        break;
+                    case 5:
+                        card.EnableNumber(number5);
+                        break;
+                    default: break;
+                }
+                counter++;
+            }
+        }
+    }
 }

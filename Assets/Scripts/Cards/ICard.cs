@@ -13,4 +13,5 @@ public interface ICard
 
     public CardEnum GetCardType();
 
+    public void EnableNumber(Sprite i);
 }

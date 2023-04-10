@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -15,13 +16,15 @@ public class CardDashBack : MonoBehaviour, ICard, IPointerEnterHandler, IPointer
 
     private Vector2 startPosition;
 
-    private bool enableDragging = true;
+    private bool enableDragging = false;
 
     private Tween tween;
 
     private int sibilingIndex;
     public CardEnum cardType = CardEnum.DashBack;
 
+    private bool enableInteraction = false;
+    public Image number;
     public void ActiveCard()
     {
         PlayerController.instance.DashBack();
@@ -72,11 +75,13 @@ public class CardDashBack : MonoBehaviour, ICard, IPointerEnterHandler, IPointer
                 Color temp = this.GetComponent<Outline>().effectColor;
                 this.GetComponent<Outline>().effectColor = new Color(temp.r, temp.g, temp.b, 1);
             }
+            CardStack.instance.ArrangeNumber();
         }
     }
 
     public void EnableDragging()
     {
+        enableInteraction = true;
         enableDragging = true;
     }
 
@@ -87,11 +92,12 @@ public class CardDashBack : MonoBehaviour, ICard, IPointerEnterHandler, IPointer
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (CardStack.instance.executing) return;
+        if (CardStack.instance.executing || !enableInteraction) return;
         if (CardStack.instance.cards.Contains(this))
         {
             CardStack.instance.cards.Remove(this);
             Color temp = this.GetComponent<Outline>().effectColor;
+            number.gameObject.SetActive(false);
             tween.Kill();
             this.GetComponent<Outline>().effectColor = new Color(temp.r, temp.g, temp.b, 0);
         }
@@ -102,10 +108,12 @@ public class CardDashBack : MonoBehaviour, ICard, IPointerEnterHandler, IPointer
             tween.Kill();
             this.GetComponent<Outline>().effectColor = new Color(temp.r, temp.g, temp.b, 1);
         }
+        CardStack.instance.ArrangeNumber();
     }
 
     public void OnPointerEnter(PointerEventData eventData)//当鼠标进入UI后执行的事件执行的
     {
+        if (!enableInteraction) return;
         if (!CardStack.instance.cards.Contains(this)) tween = this.GetComponent<Outline>().DOFade(1, .5f).SetLoops(-1, LoopType.Yoyo);
         sibilingIndex = transform.GetSiblingIndex();
         transform.SetAsLastSibling();
@@ -113,6 +121,7 @@ public class CardDashBack : MonoBehaviour, ICard, IPointerEnterHandler, IPointer
 
     public void OnPointerExit(PointerEventData eventData)//当鼠标离开UI后执行的事件执行的
     {
+        if (!enableInteraction) return;
         tween.Kill();
         if (!CardStack.instance.cards.Contains(this)) this.GetComponent<Outline>().DOFade(0, .01f);
         transform.SetSiblingIndex(sibilingIndex);
@@ -121,5 +130,10 @@ public class CardDashBack : MonoBehaviour, ICard, IPointerEnterHandler, IPointer
     public CardEnum GetCardType()
     {
         return cardType;
+    }
+    public void EnableNumber(Sprite i)
+    {
+        number.sprite = i;
+        number.gameObject.SetActive(true);
     }
 }
