@@ -306,6 +306,11 @@ public class PlayerController : MonoBehaviour
         shockCollider.isTrigger = true;
         shockCollider.size = new Vector2(shockRange, shockRange);
         
+        // Disable collisions with the "Items" layer
+        int playerLayer = gameObject.layer;
+        int itemsLayer = LayerMask.NameToLayer("Spikes");
+        Physics2D.IgnoreLayerCollision(playerLayer, itemsLayer, true);
+        
         while (Time.time < startTime + shockDuration )
         {
             hitEnemies = Physics2D.OverlapBoxAll(transform.position, new Vector2(shockRange, shockRange), 0);
@@ -387,6 +392,9 @@ public class PlayerController : MonoBehaviour
 
             yield return null;
         }
+        
+        // Re-enable collisions with the "Items" layer
+        Physics2D.IgnoreLayerCollision(playerLayer, itemsLayer, false);
 
         lightningObject.SetActive(false);
 
