@@ -243,6 +243,11 @@ public class CardManager : MonoBehaviour
 
     private bool isGoodChoice(int current_type)
     {
+        int current_remain = remainingJumpCards + remainingMoveBackCards + remainingDashCards + remainingDashBackCards + remainingSlashCards + remainingMoveCards;
+        if (current_remain <= 5)
+        {
+            return true;
+        }
         int current_in_hand = getCardInHand(current_type);
         if (current_in_hand == 2)
         {
@@ -281,6 +286,11 @@ public class CardManager : MonoBehaviour
     }
     private int RedrawCards()
     {
+        int current_remain = remainingJumpCards + remainingMoveBackCards + remainingDashCards + remainingDashBackCards + remainingSlashCards + remainingMoveCards;
+        if (current_remain <= 5)
+        {
+            return Random.Range(0, current_remain);
+        }
         if (remainingJumpCards > 0 || remainingMoveBackCards > 0 || remainingDashCards > 0 || remainingDashBackCards > 0 || remainingSlashCards > 0 || remainingMoveCards > 0)
         {
             int randomTarget = Random.Range(0, 6);
